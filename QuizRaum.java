@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class QuizRaum extends Raum {
     public QuizRaum(String beschreibung) {
         super(beschreibung);
@@ -9,7 +11,7 @@ public class QuizRaum extends Raum {
         if (befehlswort.equals("nehme")) {
             System.out.println("Hallo, du bist im Einpackmenu");
             aufnehmenSchaltteil(befehl, spiel);
-            return false; 
+            return false;
         }
         else {
             return super.fuehreBefehlAus(befehl, spiel);
@@ -35,6 +37,14 @@ public class QuizRaum extends Raum {
     protected void zeigeBefehle() {
         super.zeigeBefehle();
         System.out.println("nehme");
+    }
+
+    public void quizAufrufen() {
+        try {
+            Quiz quiz = new Quiz();
+        } catch (Exception e) { // replace "Exception" with the actual exception type
+            e.printStackTrace();
+        }
     }
 
 }
