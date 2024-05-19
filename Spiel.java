@@ -1,5 +1,3 @@
-import java.io.DataInputStream;
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -28,6 +26,7 @@ class Spiel
     private String beschreibungDraussen = "vor dem Haupteingang der Universitaet"; 
     Schaltplan aktuellerSchaltplan; 
     Schaltplan loesungssSchaltplan; 
+
 
         
     /**
@@ -64,6 +63,8 @@ class Spiel
             aktuellerSchaltplan.setzeSchaltteil(4, "Kabel");
         }
 
+        // Hier Rucksack initialiseren 
+        // Rucksack braucht die Anzahl der Schaltteile 
     }
 
     /**
@@ -200,24 +201,37 @@ class Spiel
 
 
     private void repariereSchaltung() {
+        // Loesungsschaltplan muss noch hierher verlegt werden 
         System.out.println("Du kannst nun die Schaltung reparieren");
         loesungssSchaltplan = new Schaltplan("Loesung"); 
         int anzahlRichtigerAntworten = 0; 
-        
+        SetzeBefehl neuerSetzeBefehl = new SetzeBefehl(); 
+        neuerSetzeBefehl.alleAusgeben();
+        /* 
+         for (int i = 0; i<aktuellerSchaltplan.anzahlElemente(); i++) {
+            Befehl befehl = parser.liefereBefehl();
+            String aktuellesBauteil = "Widerstand"; 
+            loesungssSchaltplan.setzeSchaltteil(i, aktuellesBauteil);
+         }
+         loesungssSchaltplan.gibAusgaenge();
+        */
 
-        // setze Loesungsbauteile 
+        // setze Loesungsbauteile
+    
         for (int i = 0; i<aktuellerSchaltplan.anzahlElemente(); i++) {
            String aktuellesBauteil = "Widerstand"; 
            loesungssSchaltplan.setzeSchaltteil(i, aktuellesBauteil);
         }
         loesungssSchaltplan.gibAusgaenge();
-        
+
+        aktuellerSchaltplan.vergleicheMitAnderemPlan(loesungssSchaltplan); 
+
         // Überprüfe aktuelle Loesung mit dem Schaltplan 
         for (int i = 0; i<aktuellerSchaltplan.anzahlElemente(); i++) {
             String aktuellesBauteil = aktuellerSchaltplan.gibAktuellesSchaltteile(i);  
             String aktuelleLoesung = loesungssSchaltplan.gibAktuellesSchaltteile(i);
             
-            if (aktuelleLoesung == aktuellesBauteil) {
+            if (aktuelleLoesung.equals(aktuellesBauteil)) {
                 System.out.println( "Das " + i + " Bauteile " + aktuelleLoesung + " ist richtig ");
                 anzahlRichtigerAntworten++; 
             }
@@ -227,6 +241,18 @@ class Spiel
          }
          System.out.println("Anzahl richtiger Antworten: " + anzahlRichtigerAntworten);
  
+    } 
+
+    private String bauteilSpieler() {
+        // Überprüfen, ob der Befehl ein zweites Wort für das Ausführen hat 
+        // if(!befehl.hatZweitesWort()) {
+            // Gibt es kein zweites Wort, wissen wir nicht, wohin...
+           // System.out.println("Wohin moechten Sie gehen?");
+           // return;
+        //}
+       String bauteilDesSpielers = "Widerstand"; 
+       return bauteilDesSpielers; 
+    
     }
 
     /**
