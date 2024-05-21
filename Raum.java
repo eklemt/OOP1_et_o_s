@@ -89,5 +89,67 @@ class Raum
     {
         return ausgaenge.get(richtung);
     }
+
+   
+
+    public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel) {
+        boolean moechteBeenden = false;
+        String befehlswort = befehl.gibBefehlswort();
+        if (befehlswort.equals("help")) {
+            hilfstextAusgeben();
+        }
+        else if (befehlswort.equals("go")) {
+            spiel.wechsleRaum(befehl);
+        }
+        else if (befehlswort.equals("quit")) {
+            moechteBeenden = beenden(befehl);
+        }
+        else if (befehlswort.equals("ausgeben")) {
+            spiel.gibRucksackinhaltAus();
+        }
+        else {
+            System.out.println("Ich weiss nicht, was Sie meinen...");
+        }
+        return moechteBeenden; 
+    }
+
+     // Implementierung der Benutzerbefehle:
+
+    /**
+     * Gib Hilfsinformationen aus.
+     * Hier geben wir eine etwas alberne und unklare Beschreibung
+     * aus, sowie eine Liste der Befehlsw�rter.
+     */
+    private void hilfstextAusgeben() 
+    {
+        System.out.println("Du stehst in einem Rauum und kannst folgende Befehle nutzen");
+        System.out.println("Zur Fortbewegung gib einfach go south/east/west/north ein");
+        System.out.println("Der Befehl Setze ist nur im Menu repair vorhanden");
+        this.zeigeBefehle();
+        // Neues Zeige-Befehle muss her 
+    }
+
+    
+
+    /**
+     * "quit" wurde eingegeben. �berpr�fe den Rest des Befehls,
+     * ob das Spiel wirklich beendet werden soll.
+     * @return 'true', wenn der Befehl das Spiel beendet, 'false' sonst.
+     */
+    private boolean beenden(Befehl befehl) 
+    {
+        if(befehl.hatZweitesWort()) {
+            System.out.println("Was soll beendet werden?");
+            return false;
+        }
+        else {
+            return true;  // Das Spiel soll beendet werden.
+        }
+    }
+
+    protected void zeigeBefehle() {
+        System.out.println("go, help, quit");
+    }
+
 }
 

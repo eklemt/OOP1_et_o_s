@@ -1,13 +1,10 @@
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 
 public class Schaltplan {
-    private HashMap<Integer, String> schaltplan;
+    private ArrayList<String> schaltplan;
     private String beschreibung; 
-    private HashMap<Integer, String> aktuelleSpielerloesung; 
-    private Parser parser;
-
 
     public void test() 
     {
@@ -17,7 +14,7 @@ public class Schaltplan {
     public Schaltplan(String beschreibung) 
     {
         this.beschreibung = beschreibung;
-        schaltplan = new HashMap<Integer, String>();
+        schaltplan = new ArrayList();
     }
 
     /**
@@ -25,15 +22,17 @@ public class Schaltplan {
      * @param richtung die Richtung, in der der Ausgang liegen soll
      * @param nachbar der Raum, der �ber diesen Ausgang erreicht wird
      */
-    public void setzeSchaltteil(Integer Nummer, String Name) 
+    public void setzeSchaltteil(String Name) 
     {
-        schaltplan.put(Nummer, Name);
+        schaltplan.add(Name); 
     }
-
 
     public void gibAusgaenge()
     {
-        System.out.println("Hash Map" + schaltplan);
+       for (int i = 0; i<schaltplan.size(); i++) {
+         System.out.println("" + schaltplan.get(i));
+       }
+
     }
 
     public String gibAktuellesSchaltteile(int Nummer) {
@@ -47,6 +46,29 @@ public class Schaltplan {
    public int anzahlElemente() {
        int anzahl = schaltplan.size(); 
        return anzahl; 
+   }
+
+   public boolean vergleicheMitAnderemPlan (Schaltplan andererSchaltplan) {
+        int anzahlRichtigerAntworten = 0;
+        for (int i = 0; i<schaltplan.size(); i++) {
+            String aktuellesBauteil = schaltplan.get(i);  
+            String aktuelleLoesung = andererSchaltplan.gibAktuellesSchaltteile(i);
+            
+            if (aktuelleLoesung.equals(aktuellesBauteil)) {
+                System.out.println( "Das " + i + " Bauteile " + aktuelleLoesung + " ist richtig ");
+                anzahlRichtigerAntworten++; 
+            }
+            else {
+                System.out.println( "Das " + i + " Bauteile " + aktuelleLoesung + " ist falsch ");
+            }
+         }
+         System.out.println("Anzahl richtiger Antworten: " + anzahlRichtigerAntworten);
+
+            if (anzahlRichtigerAntworten == schaltplan.size()) {
+                return true; 
+            } else {
+                return false; 
+            }
    }
    
 }
