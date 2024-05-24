@@ -1,0 +1,153 @@
+[
+  {
+    "location":"labor",
+    "prof": "Sczesny",
+    "question": "Wofür ist das Gruen-Gelbe Kabel",
+    "option1": "welches Kabel",
+    "option2": "einfach mehr Style",
+    "option3": "welches Kabel",
+    "solution": "Erde",
+    "reward": "Solarzelle"
+  },
+  {
+    "location":"hoersaal",
+    "prof": "Radt",
+    "question": "Wie kann ich richtig Strom messen?",
+    "option1": "in Reihe",
+    "option2": "gar nicht",
+    "option3": "ich frage Radt",
+    "solution": "ich frage Radt",
+    "reward": "Datenblatt"
+  },
+  {
+    "location":"physikraum",
+    "prof": "Juenemann",
+    "question": "Welches Gas ist cool?",
+    "option1": "Jedes Gas",
+    "option2": "Edelgas",
+    "option3": "Warmes Gas",
+    "solution": "Warmes Gas",
+    "reward": "Strommesszange"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Was passiert in einem Stromkreis, wenn der Widerstand erhöht wird, aber die Spannung konstant bleibt?",
+    "option1": "Der Strom bleibt gleich",
+    "option2": "Der Strom steigt",
+    "option3": "Der Strom sinkt",
+    "solution": "Der Strom sinkt",
+    "reward": "Oszilloskop"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Was beschreibt die \"Leerlaufspannung\" einer Spannungsquelle?",
+    "option1": "Spannung unter Lastbedingungen",
+    "option2": "Spannung bei maximalem Strom",
+    "option3": "Spannung ohne angeschlossene Last",
+    "solution": "Spannung ohne angeschlossene Last",
+    "reward": "Potentiometer"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Welcher Parameter beschreibt die Fähigkeit eines Materials, elektrische Energie zu speichern?",
+    "option1": "Induktivität",
+    "option2": "Kapazität",
+    "option3": "Resistivität",
+    "solution": "Kapazität",
+    "reward": "Kondensator"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Wie bezeichnet man die Phasendifferenz zwischen Strom und Spannung in einem idealen Kondensator?",
+    "option1": "0 Grad",
+    "option2": "90 Grad",
+    "option3": "180 Grad",
+    "solution": "90 Grad",
+    "reward": "ohmscher Widerstand"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Welcher Parameter einer Spule wird durch ihre Induktivität beschrieben?",
+    "option1": "Die Fähigkeit, Strom zu leiten",
+    "option2": "Die Fähigkeit, ein Magnetfeld zu erzeugen",
+    "option3": "Die Fähigkeit, Energie zu speichern",
+    "solution": "Die Fähigkeit, ein Magnetfeld zu erzeugen",
+    "reward": "rotes Kabel"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Welche der folgenden Schaltungen kann als Spannungsteiler verwendet werden?",
+    "option1": "Reihenwiderstandsschaltung",
+    "option2": "Parallelwiderstandsschaltung",
+    "option3": "Serienschaltung von Kondensatoren",
+    "solution": "Reihenwiderstandsschaltung",
+    "reward": "Stromquelle"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Welcher Effekt ist verantwortlich für die Umwandlung von Licht in elektrische Energie in einem Solarmodul?",
+    "option1": "Fotoelektrischer Effekt",
+    "option2": "Thermoelektrischer Effekt",
+    "option3": "Piezoelektrischer Effekt",
+    "solution": "Fotoelektrischer Effekt",
+    "reward": "Spannungsquelle"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Wie bezeichnet man den Punkt auf der IV-Kennlinie eines Solarmoduls, an dem die maximale Leistung erzeugt wird?",
+    "option1": "Kurzschlussstrompunkt",
+    "option2": "Leerlaufspannungspunkt",
+    "option3": "Maximum Power Point (MPP)",
+    "solution": "Maximum Power Point (MPP)",
+    "reward": "Kabel"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Welche Art von Verlusten werden durch den Fill Factor (FF) eines Solarmoduls beschrieben?",
+    "option1": "Ohmsche Verluste",
+    "option2": "Optische Verluste",
+    "option3": "Thermische Verluste",
+    "solution": "Ohmsche Verluste",
+    "reward": "Kondensator"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Was ist ein typisches Merkmal von bifazialen Solarmodulen?",
+    "option1": "Sie sind besonders flexibel.",
+    "option2": "Sie sind doppelseitig lichtempfindlich.",
+    "option3": "Sie haben einen eingebauten Wechselrichter.",
+    "solution": "Sie sind doppelseitig lichtempfindlich.",
+    "reward": "Spule"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Wie nennt man den Prozess, bei dem die Leistung von Solarmodulen aufgrund von Verunreinigungen und Wetterbedingungen nachlässt?",
+    "option1": "Modulalterung",
+    "option2": "Soiling",
+    "option3": "Delaminierung",
+    "solution": "Soiling",
+    "reward": "Transformator"
+  },
+  {
+    "location":"labor",
+    "prof": "prof*",
+    "question": "Was ist der Hauptzweck von Bypass-Dioden in Solarmodulen?",
+    "option1": "Spannungsregulation",
+    "option2": "Schutz vor Überhitzung",
+    "option3": "Vermeidung von Hot Spots durch Verschattung",
+    "solution": "Vermeidung von Hot Spots durch Verschattung",
+    "reward": "Diode"
+  }
+
+]

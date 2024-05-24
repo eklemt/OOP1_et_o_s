@@ -69,7 +69,7 @@ class Raum
      */
     private String gibAusgaengeAlsString()
     {
-        String ergebnis = "Ausg�nge:";
+        String ergebnis = "Ausgaenge:";
         Set<String> keys = ausgaenge.keySet();
         for(String ausgang : keys)
             ergebnis += " " + ausgang;
