@@ -35,6 +35,10 @@ public class Schaltplan {
 
     }
 
+    public ArrayList<String> gibDieSchallteile () {
+        return schaltplan; 
+    }
+
     public String gibAktuellesSchaltteile(int Nummer) {
        String schaltteil; 
        

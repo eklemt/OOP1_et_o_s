@@ -58,7 +58,7 @@ class Raum
      */
     public String gibLangeBeschreibung()
     {
-        return "Sie sind " + beschreibung + ".\n" + gibAusgaengeAlsString();
+        return "Sie sind in folgendem Raum: " + beschreibung + ".\n" + gibAusgaengeAlsString();
     }
 
     /**

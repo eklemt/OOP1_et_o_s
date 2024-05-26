@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -24,9 +25,11 @@ class Spiel
     private Parser parser;
     private Raum aktuellerRaum;
     private String beschreibungDraussen = "im Haupteingang, der Ort des Geschehens";
+    int anzahlLebendesSpielers = 3; 
     Schaltplan aktuellerSchaltplan; 
     Schaltplan loesungssSchaltplan; 
     Rucksack rucksackDesSpielers;
+    int anzahlElemente; // Anzahl der Elemente in der aktuellen Schaltung 
 
         
     /**
@@ -43,7 +46,7 @@ class Spiel
         
         Random random = new Random();
         int zufallszahl = random.nextInt(2);
-        int anzahlElemente;
+
         System.out.println("" + zufallszahl);
         
         Schaltplan schaltplan;
@@ -74,10 +77,13 @@ class Spiel
 
     /**
      * Erzeuge alle Raeume und verbinde ihre Ausgaenge miteinander.
+     * 
      */
     private void raeumeAnlegen(Schaltplan aktuellerSchaltplan)
     {
-        Raum draussen, werkstatt, fahrstuhl, cafeteria, ee1, treppenaufgang, stock1, labor1, physikraum, pmraum, stock2, etraum, fensterraum, computerraum, stock3, pcpool, labor3, matheraum;
+        Raum draussen, werkstatt, fahrstuhl, cafeteria, treppenaufgang, stock1, labor1, stock2, fensterraum, stock3, pcpool ;
+
+        QuizRaum ee1, physikraum, pmraum, etraum, labor3, matheraum, computerraum;
 
         draussen = new BegruessungsRaum("Vor dem Hautpeingang der Universitaet");
         werkstatt = new Werkstatt("die Werkstatt", aktuellerSchaltplan);
@@ -102,6 +108,7 @@ class Spiel
 
         // die Ausgaenge initialisieren
         draussen.setzeAusgang("north", werkstatt);
+        draussen.setzeAusgang("east", fahrstuhl);
         //HAUPTEINGANG
         werkstatt.setzeAusgang("north", treppenaufgang);
         werkstatt.setzeAusgang("east", ee1);
@@ -160,6 +167,44 @@ class Spiel
 
         aktuellerRaum = draussen;  // das Spiel startet draussen
 
+        // Gegenstände werden den Räumen zugeordnet nach Zufallsprinzip
+        // ArrayList mit den Quizraeumen erstellen 
+        ArrayList<QuizRaum> leereQuizraeume = new ArrayList<QuizRaum>(); 
+        leereQuizraeume.add(matheraum); 
+        leereQuizraeume.add(ee1); 
+        leereQuizraeume.add(etraum); 
+        leereQuizraeume.add(physikraum); 
+        leereQuizraeume.add(pmraum); 
+        leereQuizraeume.add(labor3); 
+        leereQuizraeume.add(computerraum); 
+
+        for (Raum raum : leereQuizraeume) {
+            System.out.println("Aktueller Raum, leer:" + raum.gibKurzbeschreibung());
+        }
+
+        ArrayList<String> nichtVerteilteSchaltteile = (ArrayList<String>) aktuellerSchaltplan.gibDieSchallteile().clone(); 
+
+        for (String nichtVerteiltesTeil : nichtVerteilteSchaltteile) {
+            System.out.println("Aktuelles Teil, nicht verteilt: " + nichtVerteiltesTeil);
+        }
+        
+
+        for (int i = anzahlElemente; i != 0; i--) {
+            Random random = new Random();
+            int zufallszahl = random.nextInt(i);
+
+            String nichtVerteiltesSchaltteil = nichtVerteilteSchaltteile.get(zufallszahl); 
+            nichtVerteilteSchaltteile.remove(zufallszahl); 
+            System.out.println("Gerade zu verteilen:" + nichtVerteiltesSchaltteil);
+            
+           
+            int zufaelligeRaumnummer = random.nextInt(i);
+            leereQuizraeume.get(zufaelligeRaumnummer).packeSchaltteilInRaum(nichtVerteiltesSchaltteil); 
+            leereQuizraeume.get(zufaelligeRaumnummer).gibKurzbeschreibung(); 
+            leereQuizraeume.get(zufaelligeRaumnummer).gibSchaltteilImRaumAus();
+            leereQuizraeume.remove(zufaelligeRaumnummer); 
+
+        }
     }
 
     /**
@@ -171,13 +216,27 @@ class Spiel
         System.out.println("Willkommen zu Elektrotechniker ohne (Schalt-)plan"); 
         System.out.println("Fuer mehr Informationen zur Bedinung gib help ein, fuer die Einfuehrung in das Spiel welcome");
         System.out.println("Wenn du das Spiel schon kennst, fang einfach an");
-                
+        
+        
+        // Spiel durchgehen, spiel gewinnen 
         boolean beendet = false;
-        while (! beendet) {
+        while (! beendet && (anzahlLebendesSpielers != 0)) {
             Befehl befehl = parser.liefereBefehl();
             beendet = verarbeiteBefehl(befehl, this);
         }
-        System.out.println("Hoffentlich hast du jetzt mehr Plan. Auf Wiedersehen.");
+        if (anzahlLebendesSpielers == 0) {
+            System.out.println("... Du hast keine Leben mehr ... Dir fehlte einfach das Wissen um die Schaltung zu reparieren.");
+            System.out.println("Du solltest mehr lernen, um irgendwann noch ein Ingenieur zu werden");
+            System.out.println("In Hamburg sagt man Tschüss! Das heißt Auf Wiedersehen!");
+        }
+        else {
+        System.out.println("Unglaublich, dass du das das beste Spiel der Welt nicht mehr spielen möchtest ...");
+        System.out.println(".....");
+        System.out.println(".....");
+        System.out.println(".....");
+        System.out.println(".....");
+        System.out.println("Tschüss");
+        }
     }
 
 
@@ -204,11 +263,20 @@ class Spiel
 
     // Rucksackinhalt ausgeben
     public void gibRucksackinhaltAus() {
-        rucksackDesSpielers.gibAusgaenge();
+        rucksackDesSpielers.rucksackinhaltInKonsole();
      }
 
     public String gibAktuellesSchaltteilAus(int Nummer) {
         return rucksackDesSpielers.gibAktuellesSchaltteile(Nummer);
+    }
+
+    public void gibAnzahlDerLebenAus () {
+        System.out.println("Du hast noch" + anzahlLebendesSpielers + "Leben.");
+    }
+
+    public void verliereEinLeben () {
+        anzahlLebendesSpielers = anzahlLebendesSpielers -1; 
+        System.out.println("Du hast ein Leben verloren. Du hast noch " + anzahlLebendesSpielers + "Leben.");
     }
 
 
@@ -239,10 +307,17 @@ class Spiel
         else {
             aktuellerRaum = naechsterRaum;
             System.out.println(aktuellerRaum.gibLangeBeschreibung());
-
+    
             if (naechsterRaum instanceof QuizRaum) {
-                ((QuizRaum) naechsterRaum).quizAufrufen();
+                if (((QuizRaum) naechsterRaum).gibschaltteilString() != null) {
+                    ((QuizRaum) naechsterRaum).quizAufrufen(this);
+                }  
+                else {
+                   System.out.println("Du schaust dich im Raum um und es ist komplett dunkel ...");
+                   System.out.println("... Hier scheint nichts zu finden zu sein ...");
+                }
             }
+
         }
     } 
 

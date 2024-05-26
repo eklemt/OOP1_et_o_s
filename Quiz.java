@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 public class Quiz {
     private static final String quizFILE = "resources/quiz.json";
     private HashSet<Quizfragen> quizfragenSet;
+    private Spiel spiel;
     //Colors
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_YELLOW = "\u001B[33m";
@@ -26,7 +27,7 @@ public class Quiz {
      *
      * @throws Exception wenn ein Fehler beim Einlesen der Quizfragen aus der Datei auftritt
      */
-    public Quiz() throws Exception
+    public Quiz(Spiel spiel) throws Exception
     {
         /*
         welcher raum
@@ -40,7 +41,8 @@ public class Quiz {
         //System.out.println(quizfragenSet);
         //alleFragenAusgeben();
 
-        quizBetreten();
+        this.spiel = spiel; 
+        
     }
 
     /**
@@ -49,6 +51,7 @@ public class Quiz {
      *
      * @throws Exception wenn ein Fehler beim Lesen der Benutzereingabe auftritt
      */
+    /* 
     public void quizBetreten() throws Exception {
         //prüfen ob quiz gestartet werden soll?
         System.out.println("\n");
@@ -60,12 +63,13 @@ public class Quiz {
         String command = scanner.nextLine();
 
         if (command.equalsIgnoreCase("yes")) {
-            quizFrageStellen();
+            quizFrageStellen(spiel);
         } else {
             quizBeenden();
         }
 
     }
+    */
 
     /**
      * Beendet das Quiz, nachdem der Benutzer sich dagegen entschieden hat, mit der Person im Raum zu interagieren.
@@ -90,7 +94,7 @@ public class Quiz {
      * Stellt eine zufällig ausgewählte Quizfrage aus dem Set der Quizfragen. Der Benutzer wird aufgefordert, die Frage zu beantworten,
      * und erhält Feedback basierend auf seiner Antwort.
      */
-    public void quizFrageStellen() {
+    public boolean  quizFrageStellen(Spiel spiel) {
         ArrayList<Quizfragen> list = new ArrayList<>(quizfragenSet);
         int randomIndex = new Random().nextInt(list.size());
         Quizfragen randomFrage = list.get(randomIndex);
@@ -107,11 +111,12 @@ public class Quiz {
         String antwort = scanner.nextLine();
 
         if (antwort.equalsIgnoreCase(randomFrage.getSolution())) {
-            System.out.println("Richtig! Du erhaeltst für deinen Rucksack: " + randomFrage.getReward());
-            weiterImText();
+            System.out.println("Richtig!");
+            return true;  
         } else {
             System.out.println("Das war leider falsch. Hier kommst du nicht weiter.");
-            weiterImText();
+            spiel.verliereEinLeben();
+            return false; 
         }
 
     }

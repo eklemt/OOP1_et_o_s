@@ -43,10 +43,11 @@ public class Rucksack {
     }
       
 
-    public void gibAusgaenge()
+    public void rucksackinhaltInKonsole()
     {
+        System.out.println("In deinem Rucksack befindet sich:");
         for (int i = 0; i<rucksack.size(); i++) {
-            System.out.println("" + rucksack.get(i));
+            System.out.print("  " + rucksack.get(i));
           }
     }
 
