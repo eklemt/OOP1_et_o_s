@@ -87,7 +87,7 @@ public class QuizRaum extends Raum {
                 richtigeAntwort = quiz.quizFrageStellen(spiel); 
                 if (richtigeAntwort) {
                     boolean alleTeileEingesammelt; 
-                    System.out.println("Du erhältst für deinen Rucksack ... " + schaltteilImRaum);
+                    System.out.println("Du erhältst für deinen Rucksack ... " + schaltteilImRaum + " von " + this.professor);
                     System.out.println("----------------------------" + ANSI_RESET);
                     rucksack.packeSchaltteilEin(schaltteilImRaum);
                     rucksack.rucksackinhaltInKonsole();;
