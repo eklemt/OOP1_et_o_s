@@ -3,13 +3,32 @@ import java.util.Scanner;
 public class QuizRaum extends Raum {
 
     public static final String ANSI_RESET = "\u001B[0m";
-    // muss das public sein ???
     public String schaltteilImRaum; 
+    public String professor; 
 
-    public QuizRaum(String beschreibung) {
+    public QuizRaum(String beschreibung, String lehrer) {
         super(beschreibung);
         schaltteilImRaum = null; 
+        this.professor = lehrer; 
     }
+
+    @Override
+    public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel, Rucksack rucksack) {
+        return super.fuehreBefehlAus(befehl, spiel, rucksack);
+    }
+
+
+    @Override 
+    protected void zeigeBefehle() {
+        super.zeigeBefehle();
+        System.out.println("nehme");
+    }
+
+    public String gibProfessorString() {
+        System.out.println("HoHi" + professor);
+        return professor; 
+    }
+
 
     public void packeSchaltteilInRaum (String name) {
         schaltteilImRaum = name; 
@@ -19,71 +38,48 @@ public class QuizRaum extends Raum {
         System.out.println("Schaltteil in dem aktuellen Raum" + this.gibKurzbeschreibung() + schaltteilImRaum);
     }
 
+    /**
+     * Methode, die die Schaltteilvariable des Raums null setzt
+     * @return String, die das Schaltteil im Raum als String zurückgibt
+     */
     public String gibschaltteilString() {
         return schaltteilImRaum; 
     }
 
-    public boolean entferneSchaltteilAusRaum () {
+
+    /**
+     * Methode, die die Schaltteilvariable des Raums null setzt
+     */
+    public void entferneSchaltteilAusRaum () {
        schaltteilImRaum = null; 
-       if (schaltteilImRaum == null) {
-         return true;
-       } 
-       return false; 
-    }
-    
-    
-
-    @Override
-    public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel) {
-        String befehlswort = befehl.gibBefehlswort();
-        if (befehlswort.equals("nehme")) {
-            System.out.println("Hallo, du bist im Einpackmenu");
-            aufnehmenSchaltteil(befehl, spiel);
-            return false;
-        }
-        else {
-            return super.fuehreBefehlAus(befehl, spiel);
-        }
-
     }
 
-
     
-    // muss noch angepasst werden, damit wir dann auch das mit dem Quiz koppeln 
-    public void aufnehmenSchaltteil(Befehl befehl, Spiel spiel) 
-    {
-        if(!befehl.hatZweitesWort()) {
-            // Gibt es kein zweites Wort, wissen wir nicht, wohin...
-            System.out.println("Welches Schaltteil möchtest du einpacken?");
-            return;
-        }
-
-        String Schaltteil = befehl.gibZweitesWort();
-
-        spiel.packeSchaltteilInDenRucksack(Schaltteil);
-    }
-    
-    @Override 
-    protected void zeigeBefehle() {
-        super.zeigeBefehle();
-        System.out.println("nehme");
-    }
-
-    public void quizAufrufen(Spiel spiel) {
+    public void quizAufrufen(Spiel spiel, Rucksack rucksack) {
         boolean moechteSpielerQuizzen; 
         boolean richtigeAntwort; 
         try {
-            Quiz quiz = new Quiz(spiel);
+            System.out.println(" Prof: " + professor);
+            Quiz quiz = new Quiz(spiel, professor);
             moechteSpielerQuizzen = quizBetreten();
             if (moechteSpielerQuizzen) {
                 richtigeAntwort = quiz.quizFrageStellen(spiel); 
                 if (richtigeAntwort) {
+                    boolean alleTeileEingesammelt; 
                     System.out.println("Du erhältst für deinen Rucksack ... " + schaltteilImRaum);
+                    System.out.println("----------------------------" + ANSI_RESET);
                     spiel.packeSchaltteilInDenRucksack(schaltteilImRaum);
                     spiel.gibRucksackinhaltAus();
+                    alleTeileEingesammelt = rucksack.alleTeileEingesammelt(); 
+                    if (alleTeileEingesammelt == true) {
+                       spiel.macheWerkstattzugänglich();
+                    }
                     entferneSchaltteilAusRaum(); 
+                    System.out.println("Wo moechtest du hingehen?");
                 }
-                weiterImText();
+                else {
+                    weiterImText();
+                }
             }
             else {
                 quizBeenden();
@@ -98,6 +94,7 @@ public class QuizRaum extends Raum {
      * Methode zum Betreten des Quiz. Der User wird aufgefordert, mit einer Person im Raum zu interagieren,
      * um das Quiz zu starten oder zu beenden.
      *
+     * @return boolean, der angibt, ob der Spieler ein Quiz spielen moechte oder nicht
      * @throws Exception wenn ein Fehler beim Lesen der Benutzereingabe auftritt
      */
     public boolean quizBetreten() throws Exception {

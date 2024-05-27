@@ -24,12 +24,15 @@ class Spiel
 {
     private Parser parser;
     private Raum aktuellerRaum;
+    private Raum raumZUrWerkstatt; 
+    private Raum werkstattraum; 
     private String beschreibungDraussen = "im Haupteingang, der Ort des Geschehens";
     int anzahlLebendesSpielers = 3; 
     Schaltplan aktuellerSchaltplan; 
     Schaltplan loesungssSchaltplan; 
     Rucksack rucksackDesSpielers;
     int anzahlElemente; // Anzahl der Elemente in der aktuellen Schaltung 
+    boolean spielWurdeGewonnen; 
 
         
     /**
@@ -37,12 +40,13 @@ class Spiel
      */
     public Spiel() 
     {
-        this.aktuellerSchaltplan = schaltplanAnlegen();
+        schaltplanAnlegen();
         raeumeAnlegen(this.aktuellerSchaltplan);
         parser = new Parser();
+        spielWurdeGewonnen = false; 
     }
 
-    private Schaltplan schaltplanAnlegen() {
+    private void schaltplanAnlegen() {
         
         Random random = new Random();
         int zufallszahl = random.nextInt(2);
@@ -52,25 +56,29 @@ class Spiel
         Schaltplan schaltplan;
 
         if (zufallszahl == 0) {
-            schaltplan = new Schaltplan("Reihenschaltung2Widerstaende");
+            schaltplan = new Schaltplan("Reihenschaltung2Widerstaende", 5);
             schaltplan.setzeSchaltteil("Kabel");
             schaltplan.setzeSchaltteil("Widerstand");
             schaltplan.setzeSchaltteil("Kabel");
             schaltplan.setzeSchaltteil("Widerstand");
             schaltplan.setzeSchaltteil("Kabel");
-            anzahlElemente = 5;
         } else {
-            schaltplan = new Schaltplan("DiodeVermessenOhneMessgeraetImPLan");
+            schaltplan = new Schaltplan("DiodeVermessenOhneMessgeraetImPLan", 5);
             schaltplan.setzeSchaltteil("Kabel");
             schaltplan.setzeSchaltteil("Widerstand");
             schaltplan.setzeSchaltteil("Kabel");
             schaltplan.setzeSchaltteil("Diode");
             schaltplan.setzeSchaltteil("Kabel");
-            anzahlElemente = 5;
+            aktuellerSchaltplan = schaltplan; 
         }
-
+        aktuellerSchaltplan = schaltplan; 
+        System.out.println("" + aktuellerSchaltplan.wieVieleTeileHatDerPlan());
+        anzahlElemente = aktuellerSchaltplan.wieVieleTeileHatDerPlan(); 
         rucksackDesSpielers = new Rucksack(anzahlElemente);
-        return schaltplan;
+        for (String schaltteil : schaltplan.gibDieSchallteile()) {
+            rucksackDesSpielers.packeSchaltteilEin(schaltteil);
+        }
+        
         // Hier Rucksack initialiseren
         // Rucksack braucht die Anzahl der Schaltteile
     }
@@ -81,54 +89,55 @@ class Spiel
      */
     private void raeumeAnlegen(Schaltplan aktuellerSchaltplan)
     {
-        Raum draussen, werkstatt, fahrstuhl, cafeteria, treppenaufgang, stock1, labor1, stock2, fensterraum, stock3, pcpool ;
+        Raum draussen, flur0, fahrstuhl, werkstatt, treppenaufgang, stock1, labor1, stock2, fensterraum, stock3, pcpool ;
 
-        QuizRaum ee1, physikraum, pmraum, etraum, labor3, matheraum, computerraum;
+        QuizRaum ee1, physikraum, pmraum, etraum, laborEEScz3, matheraum, computerraum;
 
         draussen = new BegruessungsRaum("Vor dem Hautpeingang der Universitaet");
-        werkstatt = new Werkstatt("die Werkstatt", aktuellerSchaltplan);
+        flur0 = new Raum("Flur 0");
+        raumZUrWerkstatt = flur0; 
         // die Raeume erzeugen
         fahrstuhl = new Raum("fahrstuhl e, doch er ist kaputt... :(");
-        cafeteria = new Raum("cafeteria e");
-        ee1 = new QuizRaum("EE1-Labor e");
+        werkstatt = new Werkstatt("Werkstatt", aktuellerSchaltplan);
+        werkstattraum = werkstatt; 
+        ee1 = new QuizRaum("EE1-Labor e", "Haase");
         treppenaufgang = new Raum("im Treppenaufgang e");
         stock1 = new Raum("erster Stock 1");
         labor1 = new Raum("Laborraum mit Equipment 1");
-        physikraum = new QuizRaum("Physik bei Juenemann 1");
-        pmraum = new QuizRaum("12.81 1");
+        physikraum = new QuizRaum("Physik bei Juenemann 1", "Juenemann");
+        pmraum = new QuizRaum("12.81 1", "Becker");
         stock2 = new Raum("zweiter Stock 2");
-        etraum = new QuizRaum("5.60 ET Radt 2");
+        etraum = new QuizRaum("5.60 ET Radt 2", "Radt");
         fensterraum = new Raum("Zwischenraum mit Fenstern 2");
-        computerraum = new QuizRaum("Computerraum bei Eger 2");
+        computerraum = new QuizRaum("Computerraum bei Eger 2", "Eger");
         stock3 = new Raum("dritter Stock 3");
         pcpool = new Raum("pcpool 3");
-        labor3 = new QuizRaum("laborraum kronauge 3");
-        matheraum = new QuizRaum("mathe bei landenfeld 3");
+        laborEEScz3 = new QuizRaum("laborraum sczesny 3", "Sczesny" );
+        matheraum = new QuizRaum("mathe bei landenfeld 3", "Landenfeld");
 
 
         // die Ausgaenge initialisieren
-        draussen.setzeAusgang("north", werkstatt);
+        draussen.setzeAusgang("north", flur0);
         draussen.setzeAusgang("east", fahrstuhl);
         //HAUPTEINGANG
-        werkstatt.setzeAusgang("north", treppenaufgang);
-        werkstatt.setzeAusgang("east", ee1);
-        werkstatt.setzeAusgang("south", draussen);
-        werkstatt.setzeAusgang("west", cafeteria);
-
+        flur0.setzeAusgang("north", treppenaufgang);
+        flur0.setzeAusgang("east", ee1);
+        flur0.setzeAusgang("south", draussen);
+       
         //CAFETERIA
-        cafeteria.setzeAusgang("east", werkstatt);
+        werkstatt.setzeAusgang("east", flur0);
 
         //FAHRSTUHL
-        //fahrstuhl.setzeAusgang("north", werkstatt);
+        //fahrstuhl.setzeAusgang("north", flur0);
 
         //EE1
-        ee1.setzeAusgang("west", werkstatt);
+        ee1.setzeAusgang("west", flur0);
 
         //TREPPENAUFGANG
         treppenaufgang.setzeAusgang("north", stock3);
         treppenaufgang.setzeAusgang("east", stock1);
         treppenaufgang.setzeAusgang("west", stock2);
-        treppenaufgang.setzeAusgang("south", werkstatt);
+        treppenaufgang.setzeAusgang("south", flur0);
 
         //STOCK1
         stock1.setzeAusgang("north", pmraum);
@@ -146,7 +155,7 @@ class Spiel
         stock3.setzeAusgang("north", matheraum);
         stock3.setzeAusgang("east", pcpool);
         stock3.setzeAusgang("south", treppenaufgang);
-        stock3.setzeAusgang("west", labor3);
+        stock3.setzeAusgang("west", laborEEScz3);
 
         //Raeume in STOCK1
         pmraum.setzeAusgang("south", stock1);
@@ -155,13 +164,13 @@ class Spiel
 
         //Raeume in STOCK2
         computerraum.setzeAusgang("south", stock2);
-        etraum.setzeAusgang("east", stock2);
-        fensterraum.setzeAusgang("west", stock2);
+        etraum.setzeAusgang("west", stock2);
+        fensterraum.setzeAusgang("east", stock2);
 
         //Raeume in STOCK3
         matheraum.setzeAusgang("south", stock3);
         pcpool.setzeAusgang("west", stock3);
-        labor3.setzeAusgang("east", stock3);
+        laborEEScz3.setzeAusgang("east", stock3);
 
 
 
@@ -175,11 +184,12 @@ class Spiel
         leereQuizraeume.add(etraum); 
         leereQuizraeume.add(physikraum); 
         leereQuizraeume.add(pmraum); 
-        leereQuizraeume.add(labor3); 
+        leereQuizraeume.add(laborEEScz3); 
         leereQuizraeume.add(computerraum); 
 
-        for (Raum raum : leereQuizraeume) {
+        for (QuizRaum raum : leereQuizraeume) {
             System.out.println("Aktueller Raum, leer:" + raum.gibKurzbeschreibung());
+            System.out.println("Aktueller Prof, leer:" + raum.gibProfessorString());
         }
 
         ArrayList<String> nichtVerteilteSchaltteile = (ArrayList<String>) aktuellerSchaltplan.gibDieSchallteile().clone(); 
@@ -215,6 +225,7 @@ class Spiel
     {            
         System.out.println("Willkommen zu Elektrotechniker ohne (Schalt-)plan"); 
         System.out.println("Fuer mehr Informationen zur Bedinung gib help ein, fuer die Einfuehrung in das Spiel welcome");
+        System.out.println("Welcome funktioniert dabei nur in diesem aktuellen Raum ");
         System.out.println("Wenn du das Spiel schon kennst, fang einfach an");
         
         
@@ -222,7 +233,7 @@ class Spiel
         boolean beendet = false;
         while (! beendet && (anzahlLebendesSpielers != 0)) {
             Befehl befehl = parser.liefereBefehl();
-            beendet = verarbeiteBefehl(befehl, this);
+            beendet = verarbeiteBefehl(befehl, this, rucksackDesSpielers);
         }
         if (anzahlLebendesSpielers == 0) {
             System.out.println("... Du hast keine Leben mehr ... Dir fehlte einfach das Wissen um die Schaltung zu reparieren.");
@@ -230,13 +241,22 @@ class Spiel
             System.out.println("In Hamburg sagt man Tschüss! Das heißt Auf Wiedersehen!");
         }
         else {
-        System.out.println("Unglaublich, dass du das das beste Spiel der Welt nicht mehr spielen möchtest ...");
-        System.out.println(".....");
-        System.out.println(".....");
-        System.out.println(".....");
-        System.out.println(".....");
-        System.out.println("Tschüss");
+            if (spielWurdeGewonnen) {
+                System.out.println("Du hast die Schaltung reparieren können. Super! Wenn du Lust hast eine weitere Schaltung zu reparieren starte das Spiel neu.");
+            }
+            else {
+                System.out.println("Unglaublich, dass du das das beste Spiel der Welt nicht mehr spielen möchtest ...");
+                System.out.println(".....");
+                System.out.println(".....");
+                System.out.println(".....");
+                System.out.println(".....");
+                System.out.println("Tschüss");
+            }
         }
+    }
+
+    public void spielerhatgewonnen () {
+        spielWurdeGewonnen = true; 
     }
 
 
@@ -245,10 +265,10 @@ class Spiel
      * @param befehl Der zu verarbeitende Befehl.
      * @return 'true', wenn der Befehl das Spiel beendet, 'false' sonst.
      */
-    private boolean verarbeiteBefehl(Befehl befehl, Spiel spiel)
+    private boolean verarbeiteBefehl(Befehl befehl, Spiel spiel, Rucksack rucksack)
     {
         boolean moechteBeenden;
-        moechteBeenden = aktuellerRaum.fuehreBefehlAus(befehl, spiel);
+        moechteBeenden = aktuellerRaum.fuehreBefehlAus(befehl, spiel, rucksack);
         return moechteBeenden;
     }
 
@@ -277,6 +297,16 @@ class Spiel
     public void verliereEinLeben () {
         anzahlLebendesSpielers = anzahlLebendesSpielers -1; 
         System.out.println("Du hast ein Leben verloren. Du hast noch " + anzahlLebendesSpielers + "Leben.");
+    }
+
+    // Methode, um die Werkstatt zugänglich zu machen
+    public void macheWerkstattzugänglich () {
+        raumZUrWerkstatt.setzeAusgang("west", werkstattraum);
+        System.out.println(".... Knarz ....");
+        System.out.println("Du hörst ein entferntes Knarzen im Erdgeschoss, sobald du das Teil eingesammlt hast ...");
+        System.out.println("Die Werkstatt des Schreckens wurde nun geöffnet. Nehme dich in Acht, wahrer Elektrotechniker!");
+        System.out.println("Versuche nun den Eingang zur Werkstatt zu finden.");
+        System.out.println("Du kannst dort deine gesammelten Schaltteile nutzen, um die Schaltung zu reparieren.");
     }
 
 
@@ -310,11 +340,11 @@ class Spiel
     
             if (naechsterRaum instanceof QuizRaum) {
                 if (((QuizRaum) naechsterRaum).gibschaltteilString() != null) {
-                    ((QuizRaum) naechsterRaum).quizAufrufen(this);
+                    ((QuizRaum) naechsterRaum).quizAufrufen(this, rucksackDesSpielers);
                 }  
                 else {
                    System.out.println("Du schaust dich im Raum um und es ist komplett dunkel ...");
-                   System.out.println("... Hier scheint nichts zu finden zu sein ...");
+                   System.out.println("... Hier scheint nichts zu finden zu sein ... Es ist wahrscheinlich eine gute Idee weiterzuziehen.");
                 }
             }
 

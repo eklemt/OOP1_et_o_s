@@ -5,16 +5,19 @@ import java.util.ArrayList;
 public class Schaltplan {
     private ArrayList<String> schaltplan;
     private String beschreibung; 
+    int anzahlSchaltteile; 
 
     public void test() 
     {
         System.out.println("Hallo, du bist im SchaltplanMenu");
     }
    
-    public Schaltplan(String beschreibung) 
+    public Schaltplan(String beschreibung, int AnzahlTeile) 
     {
         this.beschreibung = beschreibung;
-        schaltplan = new ArrayList();
+        anzahlSchaltteile = AnzahlTeile; 
+        System.out.println("" + anzahlSchaltteile);
+        schaltplan = new ArrayList<String>();
     }
 
     /**
@@ -27,16 +30,31 @@ public class Schaltplan {
         schaltplan.add(Name); 
     }
 
+    public int wieVieleTeileHatDerPlan() 
+    { 
+        System.out.println("" + anzahlSchaltteile);
+        return anzahlSchaltteile; 
+    }
+
     public void gibAusgaenge()
     {
        for (int i = 0; i<schaltplan.size(); i++) {
-         System.out.println("" + schaltplan.get(i));
+         System.out.print("  -  " + schaltplan.get(i));
        }
 
     }
 
+    public void loescheSchaltteile()
+    {
+       this.schaltplan.removeAll(schaltplan); 
+    }
+
     public ArrayList<String> gibDieSchallteile () {
         return schaltplan; 
+    }
+
+    public String gibBeschreibungString () {
+        return beschreibung; 
     }
 
     public String gibAktuellesSchaltteile(int Nummer) {

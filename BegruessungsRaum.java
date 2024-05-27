@@ -6,14 +6,14 @@ public class BegruessungsRaum extends Raum {
 
     
     @Override
-    public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel) {
+    public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel, Rucksack rucksack) {
         String befehlswort = befehl.gibBefehlswort();
         if (befehlswort.equals("welcome")) {
             willkommenstextAusgeben(); 
             return false; 
         }
         else {
-            return super.fuehreBefehlAus(befehl, spiel);
+            return super.fuehreBefehlAus(befehl, spiel, rucksack);
         }
 
     }
@@ -24,15 +24,16 @@ public class BegruessungsRaum extends Raum {
     private void willkommenstextAusgeben()
     {
         System.out.println();
-        System.out.println("Willkommen zu deinem ersten Job nach dem REE-Studium!");
-        System.out.println("Du arbeitest in einem wichtigen Verteilerzentrum, fuer die erneuerbaren Energien in Schleswig Hosltein");
-        System.out.println("An deinem ersten Tag ist eine wichtige Schaltung kaputt gegangen und nun haben viele Hauashalte keine Energie");
-        System.out.println("Du hast die Aufgabe diese wieder zu reparieren"); 
+        System.out.println("Willkommen zum Spiel Elektrotechniker ohne Schaltplan");
+        System.out.println("Du kommst wie gewohnt zur Uni ... Heute ist ET-Praktikum");
+        System.out.println("Als du das Gebaeude betrittst fällt dir auf, das alles dunkel ist, wie merkwürdig ...");
+        System.out.println("Herr Radt kommt dir entgegengelaufen und sagt: Eine Schaltung im BT7 ist durchgebrannt und im ganzen Gebaeude gibt es kein Strom."); 
+        System.out.println("Er bittet dich darum diese Schaltung zu reparieren ... Du fuehlst dich ueberfordert, aber nimmst die Aufgabe an"); 
         System.out.println();
         
         System.out.println("Dafuer musst du zunaechst die Ersatzschaltteile aus verschiedenen Raeumen im Gebaeude besorgen.");
-        System.out.println("Die Raeume erinnern dich stark an dein Studium :-)"); 
-        System.out.println("Tippe 'help', wenn du Hilfe brauchst.");
+        System.out.println("Erkunde, das Gebaeude und finde heraus, in welchen Raeumen sich Schaltteile befinden"); 
+        System.out.println("Tippe 'help', wenn du Hilfe brauchst, oder wissen willst, welche Befehle, du im aktuellen Raum ausfuehren kannst");
         
         System.out.println();
         System.out.println(this.gibLangeBeschreibung());
@@ -41,7 +42,7 @@ public class BegruessungsRaum extends Raum {
     @Override 
     protected void zeigeBefehle() {
         super.zeigeBefehle();
-        System.out.println("welcome");
+        System.out.print(", welcome");
     }
 
 }

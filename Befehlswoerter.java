@@ -11,7 +11,7 @@ class Befehlswoerter
 {
     // ein konstantes Array mit den g�ltigen Befehlsw�rtern
     private static final String gueltigeBefehle[] = {
-        "go", "quit", "help", "welcome", "repair", "nehme", "ausgeben", "loesungbauen"
+        "go", "quit", "help", "welcome", "repair", "anschalten", "remove"
     };
 
     /**

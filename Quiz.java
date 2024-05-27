@@ -8,11 +8,12 @@ import org.json.simple.JSONArray;
 
 public class Quiz {
     private static final String quizFILE = "resources/quiz.json";
-    private HashSet<Quizfragen> quizfragenSet;
+    private ArrayList<Quizfragen> quizfragenSet;
     private Spiel spiel;
     //Colors
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_YELLOW = "\u001B[33m";
+    public String professor; 
     /*
     quizfrage stellen
     antwort handeln
@@ -27,77 +28,35 @@ public class Quiz {
      *
      * @throws Exception wenn ein Fehler beim Einlesen der Quizfragen aus der Datei auftritt
      */
-    public Quiz(Spiel spiel) throws Exception
+    public Quiz(Spiel spiel, String lehrer) throws Exception
     {
+        this.spiel = spiel; 
+        this.professor = lehrer; 
+        System.out.println("AktuellerProf: " + this.professor);
         /*
         welcher raum
         welcher professor -> welcher fragenpool?
 
         quizfrage stellen
          */
-        quizfragenSet = new HashSet<Quizfragen>();
+        quizfragenSet = new ArrayList<Quizfragen>();
         einlesen(quizFILE);
 
         //System.out.println(quizfragenSet);
         //alleFragenAusgeben();
 
-        this.spiel = spiel; 
+        
         
     }
 
-    /**
-     * Methode zum Betreten des Quiz. Der User wird aufgefordert, mit einer Person im Raum zu interagieren,
-     * um das Quiz zu starten oder zu beenden.
-     *
-     * @throws Exception wenn ein Fehler beim Lesen der Benutzereingabe auftritt
-     */
-    /* 
-    public void quizBetreten() throws Exception {
-        //prüfen ob quiz gestartet werden soll?
-        System.out.println("\n");
-        System.out.println("In diesem Raum triffst du auf eine Person... durch das fehlende Tageslicht ist es schwer zu erkennen, wer vor dir steht...");
-        System.out.println("Vielleicht kann die Person dir aber weiterhelfen - sprichst du sie an? (yes/no)");
-
-        //user antwort abfragen: Befehl starten
-        Scanner scanner = new Scanner(System.in);
-        String command = scanner.nextLine();
-
-        if (command.equalsIgnoreCase("yes")) {
-            quizFrageStellen(spiel);
-        } else {
-            quizBeenden();
-        }
-
-    }
-    */
-
-    /**
-     * Beendet das Quiz, nachdem der Benutzer sich dagegen entschieden hat, mit der Person im Raum zu interagieren.
-     * Gibt eine entsprechende Nachricht aus und fährt mit dem nächsten Schritt im Text fort.
-     */
-    public void quizBeenden() {
-        System.out.println("Du entscheidest dich dagegen. Eine gute Entscheidung...");
-        weiterImText();
-    }
-
-    /**
-     * Ueberleitung zum Raumplan nach Quizende. Gibt eine Nachricht aus und fragt den Benutzer,
-     * wohin er als nächstes gehen möchte.
-     */
-    public void weiterImText() {
-        System.out.println("----------------------------" + ANSI_RESET);
-        System.out.println("Wo moechtest du hingehen?");
-        //TODO hier aktuellen Raum und moegliche ausgaenge angeben
-    }
-
+   
     /**
      * Stellt eine zufällig ausgewählte Quizfrage aus dem Set der Quizfragen. Der Benutzer wird aufgefordert, die Frage zu beantworten,
      * und erhält Feedback basierend auf seiner Antwort.
      */
     public boolean  quizFrageStellen(Spiel spiel) {
-        ArrayList<Quizfragen> list = new ArrayList<>(quizfragenSet);
-        int randomIndex = new Random().nextInt(list.size());
-        Quizfragen randomFrage = list.get(randomIndex);
+        int randomIndex = new Random().nextInt(quizfragenSet.size());
+        Quizfragen randomFrage = quizfragenSet.get(randomIndex);
         System.out.println("Die Person tritt vor aus der Dunkelheit: vor dir steht " + randomFrage.getProf() + "!!");
         System.out.println("Das Quiz beginnt!");
 
@@ -158,9 +117,16 @@ public class Quiz {
             JSONObject quizObj = (JSONObject) obj;
 
             Quizfragen quizfragenObjekt = new Quizfragen(quizObj);
-
-            quizfragenSet.add(quizfragenObjekt);
+            String profDerFrage = quizfragenObjekt.getProf(); 
+            System.out.println("AktuellerFragenprof:" + profDerFrage + "/" + this.professor);
+            if (profDerFrage.equals(this.professor)) {
+                System.out.println("Hi");
+               quizfragenSet.add(quizfragenObjekt);
+            }
         }
+        for (Quizfragen aktuelleQuizfrage : quizfragenSet) {
+            System.out.println("Aktuelle Frage: " + aktuelleQuizfrage.getFrage()); 
+        }        
 
     }
 }

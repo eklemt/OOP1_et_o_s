@@ -92,11 +92,12 @@ class Raum
 
    
 
-    public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel) {
+    public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel, Rucksack rucksack) {
         boolean moechteBeenden = false;
         String befehlswort = befehl.gibBefehlswort();
         if (befehlswort.equals("help")) {
             hilfstextAusgeben();
+            System.out.println("");
         }
         else if (befehlswort.equals("go")) {
             spiel.wechsleRaum(befehl);
@@ -148,7 +149,7 @@ class Raum
     }
 
     protected void zeigeBefehle() {
-        System.out.println("go, help, quit");
+        System.out.print("go, help, quit");
     }
 
 }

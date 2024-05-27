@@ -19,6 +19,20 @@ public class Rucksack {
         System.out.println("Hallo, du bist im Rucksackmenü");
     }
 
+    public boolean alleTeileEingesammelt() 
+    {
+       int übrigeTeile;
+       übrigeTeile = (anzahlElemente - rucksack.size()); 
+       if (übrigeTeile == 0) {
+          return true; 
+       }
+       else {
+          return false; 
+       }
+
+    }
+
+
     /**
      * Definiere einen Ausgang f�r diesen Raum.
      * 
@@ -45,10 +59,15 @@ public class Rucksack {
 
     public void rucksackinhaltInKonsole()
     {
+        System.out.println("----------------------------------");
         System.out.println("In deinem Rucksack befindet sich:");
         for (int i = 0; i<rucksack.size(); i++) {
             System.out.print("  " + rucksack.get(i));
-          }
+            System.out.println("");
+        }
+
+        System.out.println("Du hast damit" + (rucksack.size()) + "von" + anzahlElemente + "Schaltteilen gesammelt."); 
+        System.out.println("-----------------------------------");
     }
 
     public String gibAktuellesSchaltteile(int Nummer) {
@@ -57,6 +76,10 @@ public class Rucksack {
        schaltteil = rucksack.get(Nummer); 
 
        return schaltteil; 
+    }
+
+    public ArrayList<String> gibDieRucksackArrayList () {
+        return rucksack; 
     }
 
 
