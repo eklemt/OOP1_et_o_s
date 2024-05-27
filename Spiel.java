@@ -56,14 +56,14 @@ class Spiel
         Schaltplan schaltplan;
 
         if (zufallszahl == 0) {
-            schaltplan = new Schaltplan("Reihenschaltung2Widerstaende", 5);
+            schaltplan = new Schaltplan("Reihenschaltung2Widerstaende");
             schaltplan.setzeSchaltteil("Kabel");
             schaltplan.setzeSchaltteil("Widerstand");
             schaltplan.setzeSchaltteil("Kabel");
             schaltplan.setzeSchaltteil("Widerstand");
             schaltplan.setzeSchaltteil("Kabel");
         } else {
-            schaltplan = new Schaltplan("DiodeVermessenOhneMessgeraetImPLan", 5);
+            schaltplan = new Schaltplan("DiodeVermessenOhneMessgeraetImPLan");
             schaltplan.setzeSchaltteil("Kabel");
             schaltplan.setzeSchaltteil("Widerstand");
             schaltplan.setzeSchaltteil("Kabel");

@@ -14,19 +14,16 @@ import java.util.ArrayList;
 
 public class Schaltplan {
     private ArrayList<String> schaltplan;
-    private String beschreibung; 
-    int anzahlSchaltteile; // Anzahld der Schaltteile 
+    private String beschreibung;
     
    /**
      * Konstruktor, der ein Schaltplanelement ohne Teile erstellt
      * @param beschreibung String der beschreibt, um was für eine Schaltung es sich handelt
-     * @param anzahlTeile integer, der die Anzahl der Schaltteile in der Schaltung enthält
      * 
      */
-    public Schaltplan(String beschreibung, int anzahlTeile) 
+    public Schaltplan(String beschreibung)
     {
         this.beschreibung = beschreibung;
-        anzahlSchaltteile = anzahlTeile; 
         schaltplan = new ArrayList<String>();
     }
 

@@ -30,7 +30,7 @@ public class Werkstatt extends Raum {
     public Werkstatt(String beschreibung, Schaltplan aktuellerSchaltplan ) {
         super(beschreibung);
         this.aktuellerSchaltplan = aktuellerSchaltplan;
-        this.spielerLoesung = new Schaltplan("Loesung", aktuellerSchaltplan.anzahlSchaltteile);
+        this.spielerLoesung = new Schaltplan("Loesung");
     }
 
     /**
@@ -45,7 +45,7 @@ public class Werkstatt extends Raum {
     public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel, Rucksack rucksack) {
         String befehlswort = befehl.gibBefehlswort();
         if (befehlswort.equals("repair")) {
-            if (spielerLoesung.anzahlSchaltteile == 0) {
+            if (spielerLoesung.anzahlElemente() == 0) {
                 System.out.println("... Deine Schaltung wird repariert ...");
                 baueSpielerloesung(rucksack);
             }
@@ -96,7 +96,7 @@ public class Werkstatt extends Raum {
         System.out.println("Wenn du abbreichen moechtest, gib quit ein.");
         System.out.println("Es handelt sich um folgende Schaltung: " +aktuellerSchaltplan.gibBeschreibungString());
         System.out.println("------------------------------");
-        for (int i = 0; i < aktuellerSchaltplan.anzahlSchaltteile ; i++) {
+        for (int i = 0; i < aktuellerSchaltplan.anzahlElemente() ; i++) {
             System.out.print("Du hast noch folgede Schaltteile zur Verfügung:");
             for (String rucksackinhaltString : nichtVerteilteSchaltteile) {
                 System.out.print("  -  " + rucksackinhaltString);
