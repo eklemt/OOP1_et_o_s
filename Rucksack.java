@@ -1,24 +1,36 @@
 
 import java.util.ArrayList;
 
+/**
+ * Diese Klasse modelliert einen Rucksack in der Welt von Elektrotechniker ohne Schaltplan.
+ * 
+ *  Ein Rucksack ist dabei eine ArrayList von verschiedenen Strings, die die einzelnen Schaltteile darstellen
+ *  Sobald der Spieler ein Schaltteil einsammelt, soll dies seinem Rucksack hinzugefuegt werden 
+ * 
+ * @author  Emily Klemt, Carolin Altstaedt 
+ * @version 27.05.2024
+ */
+
 
 public class Rucksack {
     private ArrayList<String> rucksack;
     private int anzahlElemente; 
-    // man koennte hier über eine ArrayList nachdenken 
     
-   
+   /**
+     * Konstruktor, der einen leeren Rucksack erstellt
+     * @param nummerBauteile Integer, wie viele Teile sollen in dem Rucksack gepseichert werden können
+     * 
+     */
     public Rucksack(int nummerBauteile) 
     {
         anzahlElemente = nummerBauteile; 
-        rucksack = new ArrayList(anzahlElemente);
+        rucksack = new ArrayList<String>(anzahlElemente);
     }
 
-    public void test() 
-    {
-        System.out.println("Hallo, du bist im Rucksackmenü");
-    }
-
+    /**
+     * Überprüft, ob der Spieler schon alle benoetigten Schaltteile eingesammelt hat 
+     * @return, ob schon alle benoetigten Schaltteile im Rucksack sind 
+     */
     public boolean alleTeileEingesammelt() 
     {
        int übrigeTeile;
@@ -32,11 +44,9 @@ public class Rucksack {
 
     }
 
-
     /**
-     * Definiere einen Ausgang f�r diesen Raum.
-     * 
-     * @param Name der Raum, der �ber diesen Ausgang erreicht wird
+     * Fuege ein Schaltteil zum Rucksack hinz
+     * @param Name Name des Schaltteils 
      */
     public void packeSchaltteilEin(String Name) 
     {
@@ -50,13 +60,15 @@ public class Rucksack {
 
     /**
      * Methode, um ein Schaltteil aus dem Rucksack zu entfernen
-     * @param Name die Richtung, in der der Ausgang liegen sol
+     * @param Name Name des Schaltteils, das aus dem Rucksack entfernt werden soll
      */
     public void entferneSchaltteil(String Name) {
         rucksack.remove(Name); 
     }
       
-
+    /**
+    * Funktion, um den Inhalt des Rucksacks in der Konsole auszugeben
+    */
     public void rucksackinhaltInKonsole()
     {
         System.out.println("----------------------------------");
@@ -69,7 +81,12 @@ public class Rucksack {
         System.out.println("Du hast damit" + (rucksack.size()) + "von" + anzahlElemente + "Schaltteilen gesammelt."); 
         System.out.println("-----------------------------------");
     }
-
+    
+    /**
+     * Funktion, um ein bestimmtes Schaltteil an einer Stelle des Rucksacks zurueckzugeben
+     * @param Nummer, Stelle als Integer, von der das Schaltteil zurueckgegeben werden soll
+     * @return String des Schaltteils an der gewuenschten Stelle
+     */
     public String gibAktuellesSchaltteile(int Nummer) {
        String schaltteil; 
        
@@ -78,6 +95,11 @@ public class Rucksack {
        return schaltteil; 
     }
 
+
+    /**
+     * Funktion, um den Rucksack als ArrayList zurueckzugeben
+     * @return ArrayList vom Typ String des Schaltplans
+     */
     public ArrayList<String> gibDieRucksackArrayList () {
         return rucksack; 
     }

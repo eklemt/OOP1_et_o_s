@@ -1,39 +1,55 @@
 import java.util.Scanner;
 
+/**
+ * Diese Klasse modelliert eine einen Quizraum in der Welt von Elektrotechniker ohne Schaltplan.
+ * 
+ * Ein "Raum" repraesentiert einen Ort in der virtuellen Landschaft des
+ * Spiels. Ein Raum ist mit anderen Raeumen ueber Ausgaenge verbunden.
+ * Fuer jeden existierenden Ausgang haelt ein Raum eine Referenz auf 
+ * den benachbarten Raum.
+ * 
+ * Ein Quizraum erbt von der Klasse Raum und in ihm kann der Spieler eine Quizfrage beantworten,
+ * um ein Schaltteil zu bekommen, mit dem er später seine Schaltung reparieren kann 
+ * 
+ * @author  Emily Klemt, Carolin Altstaedt auf Basis von Michael Koelling und David J. Barnes
+ * @version 27.05.2024
+ */
 public class QuizRaum extends Raum {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public String schaltteilImRaum; 
     public String professor; 
 
+    /**
+     * Konstruktor, um einen Quizraum zu erstellen 
+     * @param beschreibung Beschreibung des Raums als String 
+     * @param lehrer String, der den Professor fuer den Raum angibt 
+     */
     public QuizRaum(String beschreibung, String lehrer) {
         super(beschreibung);
         schaltteilImRaum = null; 
         this.professor = lehrer; 
     }
-
-    @Override
-    public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel, Rucksack rucksack) {
-        return super.fuehreBefehlAus(befehl, spiel, rucksack);
-    }
-
-
-    @Override 
-    protected void zeigeBefehle() {
-        super.zeigeBefehle();
-        System.out.println("nehme");
-    }
-
+  
+    /**
+     * Funktion, die den Professor des Raums, als String zurueckgibt
+     * @return String mit Namen des Professors 
+     */
     public String gibProfessorString() {
-        System.out.println("HoHi" + professor);
         return professor; 
     }
 
-
+    /**
+     * Funktion, die ein Schaltteil in dem aktuellen Raum platziert 
+     * @param name Name des Schaltteils als String, welches im Raum platziert werden soll
+     */
     public void packeSchaltteilInRaum (String name) {
         schaltteilImRaum = name; 
     }
 
+    /**
+     * Funktion, die ausgibt, welches Schaltteil sich im aktuellen Raum befindet
+     */
     public void gibSchaltteilImRaumAus () {
         System.out.println("Schaltteil in dem aktuellen Raum" + this.gibKurzbeschreibung() + schaltteilImRaum);
     }
@@ -54,7 +70,13 @@ public class QuizRaum extends Raum {
        schaltteilImRaum = null; 
     }
 
-    
+    /**
+     * Funktion, die ein Quiz mit dem SPieler durchfuehrt
+     * Dabei wird dem Spieler eine Quizfrage, passend zum Professor gestellt und 
+     * wenn diese richtig beantwortet wird, bekommt der Spieler ein Schaltteil passend zum Raum 
+     * @param spiel Spiel das aktuell gespielt wird
+     * @param rucksack Rucksack des Spielers 
+     */
     public void quizAufrufen(Spiel spiel, Rucksack rucksack) {
         boolean moechteSpielerQuizzen; 
         boolean richtigeAntwort; 

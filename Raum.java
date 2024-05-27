@@ -1,29 +1,28 @@
 import java.util.Set;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
- * Diese Klasse modelliert R�ume in der Welt von Zuul.
+ * Diese Klasse modelliert Raeume in der Welt von Elektrotechniker ohne Schaltplan.
  * 
- * Ein "Raum" repr�sentiert einen Ort in der virtuellen Landschaft des
- * Spiels. Ein Raum ist mit anderen R�umen �ber Ausg�nge verbunden.
- * F�r jeden existierenden Ausgang h�lt ein Raum eine Referenz auf 
+ * Ein "Raum" repraesentiert einen Ort in der virtuellen Landschaft des
+ * Spiels. Ein Raum ist mit anderen Raeumen ueber Ausgaenge verbunden.
+ * Fuer jeden existierenden Ausgang haelt ein Raum eine Referenz auf 
  * den benachbarten Raum.
  * 
- * @author  Michael K�lling und David J. Barnes
- * @version 31.07.2011
+ * @author  Emily Klemt, Carolin Altstaedt auf Basis von Michael Koelling und David J. Barnes
+ * @version 27.05.2024
  */
 
 class Raum 
 {
     private String beschreibung;
-    private HashMap<String, Raum> ausgaenge;        // die Ausg�nge dieses Raums
+    private HashMap<String, Raum> ausgaenge;        // die Ausgaenge dieses Raums
 
     /**
      * Erzeuge einen Raum mit einer Beschreibung. Ein Raum
-     * hat anfangs keine Ausg�nge.
-     * @param beschreibung enth�lt eine Beschreibung in der Form
-     *        "in einer K�che" oder "auf einem Sportplatz".
+     * hat anfangs keine Ausgaenge.
+     * @param beschreibung enthaelt eine Beschreibung in der Form
+     *        "in einer Kueche" oder "auf einem Sportplatz".
      */
     public Raum(String beschreibung) 
     {
@@ -32,9 +31,9 @@ class Raum
     }
 
     /**
-     * Definiere einen Ausgang f�r diesen Raum.
+     * Definiere einen Ausgang fuer diesen Raum.
      * @param richtung die Richtung, in der der Ausgang liegen soll
-     * @param nachbar der Raum, der �ber diesen Ausgang erreicht wird
+     * @param nachbar der Raum, der ueber diesen Ausgang erreicht wird
      */
     public void setzeAusgang(String richtung, Raum nachbar) 
     {
@@ -43,7 +42,7 @@ class Raum
 
     /**
      * @return die kurze Beschreibung dieses Raums (die dem Konstruktor
-     * �bergeben wurde).
+     * uebergeben wurde).
      */
     public String gibKurzbeschreibung()
     {
@@ -52,8 +51,8 @@ class Raum
 
     /**
      * Liefere eine lange Beschreibung dieses Raums, in der Form:
-     *     Sie sind in der K�che.
-     *     Ausg�nge: nord west
+     *     Sie sind in der Kueche.
+     *     Ausgaenge: nord west
      * @return eine lange Beschreibung dieses Raumes.
      */
     public String gibLangeBeschreibung()
@@ -62,10 +61,10 @@ class Raum
     }
 
     /**
-     * Liefere eine Beschreibung der Ausg�nge dieses Raumes,
+     * Liefere eine Beschreibung der Ausgaenge dieses Raumes,
      * beispielsweise
-     * "Ausg�nge: north west".
-     * @return eine Beschreibung der Ausg�nge dieses Raumes.
+     * "Ausgaenge: north west".
+     * @return eine Beschreibung der Ausgaenge dieses Raumes.
      */
     private String gibAusgaengeAlsString()
     {
@@ -90,23 +89,33 @@ class Raum
         return ausgaenge.get(richtung);
     }
 
-   
+   /**
+    * Funktion, die die jeweiligen Befehle vom Raum ausfuehrt, je nachdem welcher Befehl eingegebeben wurde
+    * @param befehl, aktueller Befehl vom Parser
+    * @param spiel, um auf das Spiel zurückgreifen zu koennen
+    * @param rucksack um auf die Inhalte des Rucksacks zurückgreifen zu koennen
+    * @return , ob der Spieler das Spiel beenden moechte
+    */
 
     public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel, Rucksack rucksack) {
         boolean moechteBeenden = false;
         String befehlswort = befehl.gibBefehlswort();
+        // Hilfstext ausgeben
         if (befehlswort.equals("help")) {
             hilfstextAusgeben();
             System.out.println("");
         }
+        // Raum wechseln 
         else if (befehlswort.equals("go")) {
             spiel.wechsleRaum(befehl);
         }
+        // Spiel verlassen
         else if (befehlswort.equals("quit")) {
             moechteBeenden = beenden(befehl);
         }
+        // Rucksackinhalt ausgeben
         else if (befehlswort.equals("ausgeben")) {
-            spiel.gibRucksackinhaltAus();
+            rucksack.rucksackinhaltInKonsole();
         }
         else {
             System.out.println("Ich weiss nicht, was Sie meinen...");
@@ -133,7 +142,7 @@ class Raum
     
 
     /**
-     * "quit" wurde eingegeben. �berpr�fe den Rest des Befehls,
+     * "quit" wurde eingegeben. Ueberpruefe den Rest des Befehls,
      * ob das Spiel wirklich beendet werden soll.
      * @return 'true', wenn der Befehl das Spiel beendet, 'false' sonst.
      */
@@ -147,9 +156,12 @@ class Raum
             return true;  // Das Spiel soll beendet werden.
         }
     }
-
+    
+    /**
+     * Gebe, die Befehle aus, die im aktuellen Raum moeglich sind
+     */
     protected void zeigeBefehle() {
-        System.out.print("go, help, quit");
+        System.out.print("Aktuell moegliche Befehle: go, help, quit, ausgeben");
     }
 
 }

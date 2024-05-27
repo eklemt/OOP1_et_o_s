@@ -2,22 +2,21 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *  Dies ist die Hauptklasse der Anwendung "Die Welt von Zuul".
- *  "Die Welt von Zuul" ist ein sehr einfaches, textbasiertes
- *  Adventure-Game. Ein Spieler kann sich in einer Umgebung bewegen,
- *  mehr nicht. Das Spiel sollte auf jeden Fall ausgebaut werden,
- *  damit es interessanter wird!
+ *  Dies ist die Hauptklasse der Anwendung "Elektrotechniker ohne Schaltplan", 
+ *  Diese basiert auf Zuul von Micheal Koelling und David J. Barnes
+ *  Elektrotechniker ohne Schaltplan ist ein einfaches textbasiertes Game, in dem der Spieler eine
+ *  Schaltung reparieren muss. Dafür muss der Spieler verschiedene Raeume finden, 
+ *  in denen er nach Beantworten einer Frage, ein Schaltteil für diese Schaltung bekommt. 
+ *  Sobald er alle Schaltteile eingesammelt hat, kann er die Schaltteile in der richtigen Reihenfolge in 
+ *  einer Werkstatt verbinden und so gewinnen. 
+ *  Dabei stehen dem Spieler insgesamt 5 Leben zur Verfügung.
  * 
  *  Zum Spielen muss eine Instanz dieser Klasse erzeugt werden und
  *  an ihr die Methode "spielen" aufgerufen werden.
  * 
- *  Diese Instanz dieser Klasse erzeugt und initialisiert alle
- *  anderen Objekte der Anwendung: Sie legt alle R�ume und einen
- *  Parser an und startet das Spiel. Sie wertet auch die Befehle
- *  aus, die der Parser liefert und sorgt f�r ihre Ausf�hrung.
  * 
- * @author  Michael K�lling und David J. Barnes
- * @version 31.07.2011
+ * @author  Emily Klemt, Carolin Altstaedt
+ * @version 27.05.2024
  */
 
 class Spiel 
@@ -26,17 +25,15 @@ class Spiel
     private Raum aktuellerRaum;
     private Raum raumZUrWerkstatt; 
     private Raum werkstattraum; 
-    private String beschreibungDraussen = "im Haupteingang, der Ort des Geschehens";
-    int anzahlLebendesSpielers = 3; 
     Schaltplan aktuellerSchaltplan; 
-    Schaltplan loesungssSchaltplan; 
-    Rucksack rucksackDesSpielers;
+    Rucksack rucksackDesSpielers; // Objekt der Klasse Rucksack, in dem die eingesammelten Schaltteile gelagert werden
     int anzahlElemente; // Anzahl der Elemente in der aktuellen Schaltung 
-    boolean spielWurdeGewonnen; 
-
+    boolean spielWurdeGewonnen; // anzeige, ob der Spieler gewonnen hat
+    int anzahlLebendesSpielers = 5; 
         
     /**
-     * Erzeuge ein Spiel und initialisiere die interne Raumkarte.
+     * Erzeuge ein Spiel und initialisiere die interne Raumkarte, sowie den Schaltplan
+     * 
      */
     public Spiel() 
     {
@@ -45,7 +42,10 @@ class Spiel
         parser = new Parser();
         spielWurdeGewonnen = false; 
     }
-
+    
+    /**
+     * Funktion, um zufällig einen Schaltplan auszuwählen und zu erstellen, den der Spieler im Laufe des Spiels loesen soll
+     */
     private void schaltplanAnlegen() {
         
         Random random = new Random();
@@ -72,20 +72,19 @@ class Spiel
             aktuellerSchaltplan = schaltplan; 
         }
         aktuellerSchaltplan = schaltplan; 
-        System.out.println("" + aktuellerSchaltplan.wieVieleTeileHatDerPlan());
-        anzahlElemente = aktuellerSchaltplan.wieVieleTeileHatDerPlan(); 
+        System.out.println("" + aktuellerSchaltplan.anzahlElemente());
+        anzahlElemente = aktuellerSchaltplan.anzahlElemente(); 
         rucksackDesSpielers = new Rucksack(anzahlElemente);
         for (String schaltteil : schaltplan.gibDieSchallteile()) {
             rucksackDesSpielers.packeSchaltteilEin(schaltteil);
         }
-        
-        // Hier Rucksack initialiseren
-        // Rucksack braucht die Anzahl der Schaltteile
+
     }
 
     /**
      * Erzeuge alle Raeume und verbinde ihre Ausgaenge miteinander.
-     * 
+     * Verteile, die Schallteile, die benötigt werden für den aktuellen Schaltplan in den verschiedenen Raeumen
+     * @param  Schaltplan, der angibt, welche Teile, der aktuelle Schaltplan enthält, um diese in den Raeumen zu platzieren
      */
     private void raeumeAnlegen(Schaltplan aktuellerSchaltplan)
     {
@@ -187,10 +186,6 @@ class Spiel
         leereQuizraeume.add(laborEEScz3); 
         leereQuizraeume.add(computerraum); 
 
-        for (QuizRaum raum : leereQuizraeume) {
-            System.out.println("Aktueller Raum, leer:" + raum.gibKurzbeschreibung());
-            System.out.println("Aktueller Prof, leer:" + raum.gibProfessorString());
-        }
 
         ArrayList<String> nichtVerteilteSchaltteile = (ArrayList<String>) aktuellerSchaltplan.gibDieSchallteile().clone(); 
 
@@ -220,6 +215,7 @@ class Spiel
     /**
      * Die Hauptmethode zum Spielen. Laeuft bis zum Ende des Spiels
      * in einer Schleife.
+     * Zudem wird hier beim Gewinnen ein Text ausgegeben
      */
     public void spielen() 
     {            
@@ -238,7 +234,7 @@ class Spiel
         if (anzahlLebendesSpielers == 0) {
             System.out.println("... Du hast keine Leben mehr ... Dir fehlte einfach das Wissen um die Schaltung zu reparieren.");
             System.out.println("Du solltest mehr lernen, um irgendwann noch ein Ingenieur zu werden");
-            System.out.println("In Hamburg sagt man Tschüss! Das heißt Auf Wiedersehen!");
+            System.out.println("Auf Wiedersehen");
         }
         else {
             if (spielWurdeGewonnen) {
@@ -255,6 +251,9 @@ class Spiel
         }
     }
 
+    /**
+     * Methode, um die Variable, ob der Spieler gewonnen hat, auf true zu setzen
+     */
     public void spielerhatgewonnen () {
         spielWurdeGewonnen = true; 
     }
@@ -281,25 +280,44 @@ class Spiel
        rucksackDesSpielers.packeSchaltteilEin(Schaltteil);
     }
 
-    // Rucksackinhalt ausgeben
+    /**
+     *  Methode, um die eingesammelten Schaltteile aus dem Rucksack, vom Spiel aufzurufen
+     */
     public void gibRucksackinhaltAus() {
         rucksackDesSpielers.rucksackinhaltInKonsole();
      }
 
+    /**
+     * Methode, um das Schaltteil an einer bestimmten Stelle des Rucksacks auszugeben
+     * @param Nummer, int, das der Nummer des Schaltteils entspricht, das ausgegeben werden soll
+     * @return Schaltteil, string, das dem Schaltteil an der gewuenschten Stelle entspricht
+     */
     public String gibAktuellesSchaltteilAus(int Nummer) {
         return rucksackDesSpielers.gibAktuellesSchaltteile(Nummer);
     }
 
+    /**
+     * Gibt aus, wie viele Leben der Spieler noch hat 
+     */
+
     public void gibAnzahlDerLebenAus () {
-        System.out.println("Du hast noch" + anzahlLebendesSpielers + "Leben.");
+        System.out.println("Du hast noch" + anzahlLebendesSpielers + "Leben von ehemals 5 Leben.");
     }
+
+    /**
+     *  Reduziert, die Anzahl der Leben um 1 und gibt aus, wie viele Leben der Spieler noch hat
+     */
 
     public void verliereEinLeben () {
         anzahlLebendesSpielers = anzahlLebendesSpielers -1; 
-        System.out.println("Du hast ein Leben verloren. Du hast noch " + anzahlLebendesSpielers + "Leben.");
+        System.out.println("Du hast ein Leben verloren.");
+        gibAnzahlDerLebenAus();
     }
 
-    // Methode, um die Werkstatt zugänglich zu machen
+    /**
+     * Methode, um nachdem der Spieler alle Schaltteile eingesammelt hat, den Eingang zur Werkstatt zu setzen
+     * und die einen Text ausgibt, um den Spieler darauf aufmerksam zu machen, dass es nun weitergeht 
+     *  */
     public void macheWerkstattzugänglich () {
         raumZUrWerkstatt.setzeAusgang("west", werkstattraum);
         System.out.println(".... Knarz ....");
@@ -317,6 +335,8 @@ class Spiel
      * Versuche, in eine Richtung zu gehen. Wenn es einen Ausgang gibt,
      * wechsele in den neuen Raum, ansonsten gib eine Fehlermeldung
      * aus.
+     * Sollte der Raum ein Quizraum sein, in dem sich noch ein Gegenstand befindet, wird ein Quiz gestartet
+     * @param Befehl, der aktuelle Befehl, aus dem Richtung abgelesen wird
      */
     public void wechsleRaum(Befehl befehl)
     {
@@ -337,7 +357,7 @@ class Spiel
         else {
             aktuellerRaum = naechsterRaum;
             System.out.println(aktuellerRaum.gibLangeBeschreibung());
-    
+            // es wird übeprüft, ob es sich um einen Quizraum handelt
             if (naechsterRaum instanceof QuizRaum) {
                 if (((QuizRaum) naechsterRaum).gibschaltteilString() != null) {
                     ((QuizRaum) naechsterRaum).quizAufrufen(this, rucksackDesSpielers);
@@ -351,12 +371,16 @@ class Spiel
         }
     } 
 
+
+    /**
+     * Main, die das Spiel startet
+     * @param args
+     */
+
     public static void main(String[] args){
-        System.out.println("Du hast ein neues Spiel gestartet");
+        System.out.println("Du hast ein neues Spiel gestartet.");
         
         Spiel spiel = new Spiel();
         spiel.spielen();
-
-
     }
 }
