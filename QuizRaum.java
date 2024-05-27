@@ -81,7 +81,6 @@ public class QuizRaum extends Raum {
         boolean moechteSpielerQuizzen; 
         boolean richtigeAntwort; 
         try {
-            System.out.println(" Prof: " + professor);
             Quiz quiz = new Quiz(spiel, professor);
             moechteSpielerQuizzen = quizBetreten();
             if (moechteSpielerQuizzen) {
@@ -90,8 +89,8 @@ public class QuizRaum extends Raum {
                     boolean alleTeileEingesammelt; 
                     System.out.println("Du erhältst für deinen Rucksack ... " + schaltteilImRaum);
                     System.out.println("----------------------------" + ANSI_RESET);
-                    spiel.packeSchaltteilInDenRucksack(schaltteilImRaum);
-                    spiel.gibRucksackinhaltAus();
+                    rucksack.packeSchaltteilEin(schaltteilImRaum);
+                    rucksack.rucksackinhaltInKonsole();;
                     alleTeileEingesammelt = rucksack.alleTeileEingesammelt(); 
                     if (alleTeileEingesammelt == true) {
                        spiel.macheWerkstattzugänglich();
@@ -145,14 +144,13 @@ public class QuizRaum extends Raum {
         weiterImText();
     }
 
-       /**
+    /**
      * Ueberleitung zum Raumplan nach Quizende. Gibt eine Nachricht aus und fragt den Benutzer,
      * wohin er als nächstes gehen möchte.
      */
     public void weiterImText() {
         System.out.println("----------------------------" + ANSI_RESET);
         System.out.println("Wo moechtest du hingehen?");
-        //TODO hier aktuellen Raum und moegliche ausgaenge angeben
     }
 
 

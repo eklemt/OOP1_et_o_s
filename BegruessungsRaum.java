@@ -60,7 +60,7 @@ public class BegruessungsRaum extends Raum {
         
         System.out.println("Dafuer musst du zunaechst die Ersatzschaltteile aus verschiedenen Raeumen im Gebaeude besorgen.");
         System.out.println("Erkunde, das Gebaeude und finde heraus, in welchen Raeumen sich Schaltteile befinden"); 
-        System.out.println("Tippe 'help', wenn du Hilfe brauchst, oder wissen willst, welche Befehle, du im aktuellen Raum ausfuehren kannst");
+        System.out.println("Tippe 'help', wenn du nicht mehr weiterweisst, oder wissen willst, welche Befehle, du im aktuellen Raum ausfuehren kannst");
         System.out.println("Sobald du alle Schaltteile gesammelt hast, kriegst du eine Nachricht, wie es weitergeht.");
         System.out.println("Fur das Spiel hast du 5 Leben, passe also auf, was du antwortest");
         System.out.println();

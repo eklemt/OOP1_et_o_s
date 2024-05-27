@@ -102,6 +102,7 @@ public class Schaltplan {
     */
    public boolean vergleicheMitAnderemPlan (Schaltplan andererSchaltplan) {
         int anzahlRichtigerAntworten = 0;
+        System.out.println("-----------------------------------------------------");
         for (int i = 0; i<schaltplan.size(); i++) {
             String aktuellesBauteil = schaltplan.get(i);  
             String aktuelleLoesung = andererSchaltplan.gibAktuellesSchaltteile(i);
@@ -115,7 +116,7 @@ public class Schaltplan {
             }
          }
          System.out.println("Anzahl richtiger Antworten: " + anzahlRichtigerAntworten);
-
+         System.out.println("-----------------------------------------------------");
             if (anzahlRichtigerAntworten == schaltplan.size()) {
                 return true; 
             } else {

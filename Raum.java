@@ -132,10 +132,11 @@ class Raum
      */
     private void hilfstextAusgeben() 
     {
+        System.out.println("");
         System.out.println("Du stehst in einem Rauum und kannst folgende Befehle nutzen");
         System.out.println("Zur Fortbewegung gib einfach go south/east/west/north ein");
-        System.out.println("Der Befehl Setze ist nur im Menu repair vorhanden");
         this.zeigeBefehle();
+        System.out.println();
         // Neues Zeige-Befehle muss her 
     }
 

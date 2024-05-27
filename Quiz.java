@@ -32,7 +32,6 @@ public class Quiz {
     {
         this.spiel = spiel; 
         this.professor = lehrer; 
-        System.out.println("AktuellerProf: " + this.professor);
         /*
         welcher raum
         welcher professor -> welcher fragenpool?
@@ -118,15 +117,10 @@ public class Quiz {
 
             Quizfragen quizfragenObjekt = new Quizfragen(quizObj);
             String profDerFrage = quizfragenObjekt.getProf(); 
-            System.out.println("AktuellerFragenprof:" + profDerFrage + "/" + this.professor);
             if (profDerFrage.equals(this.professor)) {
-                System.out.println("Hi");
                quizfragenSet.add(quizfragenObjekt);
             }
-        }
-        for (Quizfragen aktuelleQuizfrage : quizfragenSet) {
-            System.out.println("Aktuelle Frage: " + aktuelleQuizfrage.getFrage()); 
-        }        
+        } 
 
     }
 }

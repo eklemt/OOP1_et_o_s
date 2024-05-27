@@ -75,6 +75,7 @@ public class Werkstatt extends Raum {
         }
         else if (befehlswort.equals("remove")) {
             spielerLoesung.loescheSchaltteile();
+            System.out.println("Du hast alle Schaltteile aus deiner aktuellen Loesung entfernt."); 
             return false; 
         }
         else {
@@ -97,6 +98,7 @@ public class Werkstatt extends Raum {
         System.out.println("Es handelt sich um folgende Schaltung: " +aktuellerSchaltplan.gibBeschreibungString());
         System.out.println("------------------------------");
         for (int i = 0; i < aktuellerSchaltplan.anzahlElemente() ; i++) {
+            System.out.println("");
             System.out.print("Du hast noch folgede Schaltteile zur Verfügung:");
             for (String rucksackinhaltString : nichtVerteilteSchaltteile) {
                 System.out.print("  -  " + rucksackinhaltString);
@@ -106,7 +108,7 @@ public class Werkstatt extends Raum {
             spielerLoesung.gibAusgaenge();
             System.out.print("  -   Quelle");
             System.out.println("");
-            System.out.println("Setze nun das " + i + "Schaltteil:");
+            System.out.println("Setze nun das " + i + " Schaltteil:");
             aktuellesTeil = holeEinSchaltteilDerSpielerloesung(nichtVerteilteSchaltteile); 
             if (aktuellesTeil.equals("quit")) {
                  System.out.println("------------------------------");
@@ -117,6 +119,7 @@ public class Werkstatt extends Raum {
             nichtVerteilteSchaltteile.remove(aktuellesTeil); 
             }
         }
+         System.out.println("Du hast nun alle Schaltteile in deine Loesung eingebaut.");
          System.out.println("------------------------------");
     }
     /**
@@ -165,11 +168,7 @@ public class Werkstatt extends Raum {
      */
 
     private boolean repariereSchaltung() {
-        System.out.println("Du kannst nun die Schaltung reparieren"); 
-    
-        spielerLoesung.gibAusgaenge();
-        aktuellerSchaltplan.gibAusgaenge();
-
+        System.out.println("Du hast deine gebaute Schaltung nun an eine Quelle angeschlossen."); 
         boolean richtigerPlan = aktuellerSchaltplan.vergleicheMitAnderemPlan(spielerLoesung); 
         return richtigerPlan; 
         
@@ -181,7 +180,11 @@ public class Werkstatt extends Raum {
     @Override 
     protected void zeigeBefehle() {
         super.zeigeBefehle();
-        System.out.println(", repair, anschalten");
+        System.out.print(", repair, anschalten, remove");
+        System.out.println("");
+        System.out.println("Aktuell befindest du dich in der Werkstatt, hier hast du die Moeglichkeit mit repair, deine Schaltteile zu verschalten.");
+        System.out.println("Mit anschalten wird ueberprueft, ob deine Schaltung richtig ist");
+        System.out.println("Mit remove, kannst du deine bisher gebaute Loesung erneut zusammenbauen");
     }
  
 }

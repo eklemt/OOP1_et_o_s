@@ -78,7 +78,7 @@ public class Rucksack {
             System.out.println("");
         }
 
-        System.out.println("Du hast damit" + (rucksack.size()) + "von" + anzahlElemente + "Schaltteilen gesammelt."); 
+        System.out.println("Du hast damit " + (rucksack.size()) + " von " + anzahlElemente + " Schaltteilen gesammelt."); 
         System.out.println("-----------------------------------");
     }
     

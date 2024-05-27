@@ -34,9 +34,9 @@
     "prof": "Sczesny",
     "question": "Was ist ein typisches Merkmal von bifazialen Solarmodulen?",
     "option1": "Sie sind besonders flexibel.",
-    "option2": "Sie sind doppelseitig lichtempfindlich.",
-    "option3": "Sie haben einen eingebauten Wechselrichter.",
-    "solution": "Sie sind doppelseitig lichtempfindlich.",
+    "option2": "Sie sind doppelseitig lichtempfindlich",
+    "option3": "Sie haben einen eingebauten Wechselrichter",
+    "solution": "Sie sind doppelseitig lichtempfindlich",
     "reward": "Spule"
   },
   {
