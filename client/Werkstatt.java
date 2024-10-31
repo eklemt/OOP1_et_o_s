@@ -1,14 +1,16 @@
+package client;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Diese Klasse modelliert eine Werkstatt in der Welt von Elektrotechniker ohne Schaltplan.
+ * Diese Klasse modelliert eine client.Werkstatt in der Welt von Elektrotechniker ohne client.Schaltplan.
  * 
- * Ein "Raum" repraesentiert einen Ort in der virtuellen Landschaft des
- * Spiels. Ein Raum ist mit anderen Raeumen ueber Ausgaenge verbunden.
- * Fuer jeden existierenden Ausgang haelt ein Raum eine Referenz auf 
- * den benachbarten Raum.
- * Eine Werkstatt erbt von der Klasse Raum und in ihr kann der Spieler seine eingesammelten Schaltteile zusammensetzen 
+ * Ein "client.Raum" repraesentiert einen Ort in der virtuellen Landschaft des
+ * Spiels. Ein client.Raum ist mit anderen Raeumen ueber Ausgaenge verbunden.
+ * Fuer jeden existierenden Ausgang haelt ein client.Raum eine Referenz auf
+ * den benachbarten client.Raum.
+ * Eine client.Werkstatt erbt von der Klasse client.Raum und in ihr kann der Spieler seine eingesammelten Schaltteile zusammensetzen
  * und seine Schaltung damit reparieren 
  * 
  * @author  Emily Klemt, Carolin Altstaedt auf Basis von Michael Koelling und David J. Barnes
@@ -19,13 +21,13 @@ import java.util.Scanner;
 
 public class Werkstatt extends Raum {
     
-    private final Schaltplan aktuellerSchaltplan; // Schaltplan, der dem Loesungsschaltplan entspricht
-    Schaltplan spielerLoesung; // Schaltplan, der den vom Spieler gebauten Loesungsvorschlag enthaelt
+    private final Schaltplan aktuellerSchaltplan; // client.Schaltplan, der dem Loesungsschaltplan entspricht
+    Schaltplan spielerLoesung; // client.Schaltplan, der den vom Spieler gebauten Loesungsvorschlag enthaelt
 
     /**
      * Konstruktor, um einen Werkstattraum zu erstellen 
      * @param beschreibung Beschreibung des Raums als String 
-     * @param aktuellerSchaltplan Loesungsschaltplan als Schaltplan 
+     * @param aktuellerSchaltplan Loesungsschaltplan als client.Schaltplan
      */
     public Werkstatt(String beschreibung, Schaltplan aktuellerSchaltplan ) {
         super(beschreibung);
@@ -34,12 +36,12 @@ public class Werkstatt extends Raum {
     }
 
     /**
-    * Funktion, die die jeweiligen Befehle vom Raum ausfuehrt, je nachdem welcher Befehl eingegebeben wurde
-    * für die Werkstatt gibt es dabei die Zusatzbefehle repair, anschalten und remove 
-    * @param befehl, aktueller Befehl vom Parser
-    * @param spiel, um auf das Spiel zurückgreifen zu koennen
+    * Funktion, die die jeweiligen Befehle vom client.Raum ausfuehrt, je nachdem welcher Befehl eingegebeben wurde
+    * für die client.Werkstatt gibt es dabei die Zusatzbefehle repair, anschalten und remove
+    * @param befehl, aktueller Befehl vom client.Parser
+    * @param spiel, um auf das client.Spiel zurückgreifen zu koennen
     * @param rucksack um auf die Inhalte des Rucksacks zurückgreifen zu koennen
-    * @return , ob der Spieler das Spiel beenden moechte
+    * @return , ob der Spieler das client.Spiel beenden moechte
     */
     @Override
     public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel, Rucksack rucksack) {
@@ -104,7 +106,7 @@ public class Werkstatt extends Raum {
                 System.out.print("  -  " + rucksackinhaltString);
             }
             System.out.println("");
-            System.out.print("Dein Schaltplan sieht bisher so aus: Quelle");
+            System.out.print("Dein client.Schaltplan sieht bisher so aus: Quelle");
             spielerLoesung.gibAusgaenge();
             System.out.print("  -   Quelle");
             System.out.println("");
@@ -149,7 +151,7 @@ public class Werkstatt extends Raum {
     }
 
    /**
-    * FUnktion, die ueberprueft, ob der SPieler dieses Schaltteil auch wirklich im Rucksack hat
+    * FUnktion, die ueberprueft, ob der SPieler dieses Schaltteil auch wirklich im client.Rucksack hat
     * @param schaltteil String, der dem Schaltteil entspricht, welches der Spieler einbauen moechte
     * @param rucksackinhalt ArrayList, die alle noch uebrigen Schaltteile enthaelt 
     */
@@ -163,7 +165,7 @@ public class Werkstatt extends Raum {
     }
 
     /**
-     * Funktion, um zu ueberprüfen, ob der eingegebene Schaltplan, dem loesungsschaltplan entspricht
+     * Funktion, um zu ueberprüfen, ob der eingegebene client.Schaltplan, dem loesungsschaltplan entspricht
      * @return boolean, ob dies der Fall ist oder nicht 
      */
 
@@ -175,14 +177,14 @@ public class Werkstatt extends Raum {
     }
 
     /**
-     * Gebe alle im aktuellen Raum moeglichen Befehle aus 
+     * Gebe alle im aktuellen client.Raum moeglichen Befehle aus
      */
     @Override 
     protected void zeigeBefehle() {
         super.zeigeBefehle();
         System.out.print(", repair, anschalten, remove");
         System.out.println("");
-        System.out.println("Aktuell befindest du dich in der Werkstatt, hier hast du die Moeglichkeit mit repair, deine Schaltteile zu verschalten.");
+        System.out.println("Aktuell befindest du dich in der client.Werkstatt, hier hast du die Moeglichkeit mit repair, deine Schaltteile zu verschalten.");
         System.out.println("Mit anschalten wird ueberprueft, ob deine Schaltung richtig ist");
         System.out.println("Mit remove, kannst du deine bisher gebaute Loesung erneut zusammenbauen");
     }

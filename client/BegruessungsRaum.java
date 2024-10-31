@@ -1,11 +1,13 @@
+package client;
+
 /**
- * Diese Klasse modelliert Begruessungsraeume in der Welt von Elektrotechniker ohne Schaltplan.
+ * Diese Klasse modelliert Begruessungsraeume in der Welt von Elektrotechniker ohne client.Schaltplan.
  * 
- * Ein "Raum" repraesentiert einen Ort in der virtuellen Landschaft des
- * Spiels. Ein Raum ist mit anderen Raeumen ueber Ausgaenge verbunden.
- * Fuer jeden existierenden Ausgang haelt ein Raum eine Referenz auf 
- * den benachbarten Raum.
- * Ein Begruessungsraum erbt von der Klasse Raum und hat als zusätzliche Funktion, die Moeglichkeit einen Begrueßungstext auszugeben
+ * Ein "client.Raum" repraesentiert einen Ort in der virtuellen Landschaft des
+ * Spiels. Ein client.Raum ist mit anderen Raeumen ueber Ausgaenge verbunden.
+ * Fuer jeden existierenden Ausgang haelt ein client.Raum eine Referenz auf
+ * den benachbarten client.Raum.
+ * Ein Begruessungsraum erbt von der Klasse client.Raum und hat als zusätzliche Funktion, die Moeglichkeit einen Begrueßungstext auszugeben
  * 
  * @author  Emily Klemt, Carolin Altstaedt auf Basis von Michael Koelling und David J. Barnes
  * @version 27.05.2024
@@ -27,7 +29,7 @@ public class BegruessungsRaum extends Raum {
      * @param spiel
      * @param rucksack
      * @param befehl
-     * @return, ob der Spieler das Spiel beenden moechte 
+     * @return, ob der Spieler das client.Spiel beenden moechte
      */
     
     @Override
@@ -50,7 +52,7 @@ public class BegruessungsRaum extends Raum {
     {
         System.out.println("-------------------------------------------------------------");
         System.out.println();
-        System.out.println("Willkommen zum Spiel Elektrotechniker ohne Schaltplan");
+        System.out.println("Willkommen zum client.Spiel Elektrotechniker ohne client.Schaltplan");
         System.out.println("Du kommst wie gewohnt zur Uni ... Heute ist ET-Praktikum");
         System.out.println("Als du das Gebaeude betrittst fällt dir auf, das alles dunkel ist, wie merkwürdig ...");
         System.out.println("Herr Radt kommt dir entgegengelaufen und sagt:"); 
@@ -60,9 +62,9 @@ public class BegruessungsRaum extends Raum {
         
         System.out.println("Dafuer musst du zunaechst die Ersatzschaltteile aus verschiedenen Raeumen im Gebaeude besorgen.");
         System.out.println("Erkunde, das Gebaeude und finde heraus, in welchen Raeumen sich Schaltteile befinden"); 
-        System.out.println("Tippe 'help', wenn du nicht mehr weiterweisst, oder wissen willst, welche Befehle, du im aktuellen Raum ausfuehren kannst");
+        System.out.println("Tippe 'help', wenn du nicht mehr weiterweisst, oder wissen willst, welche Befehle, du im aktuellen client.Raum ausfuehren kannst");
         System.out.println("Sobald du alle Schaltteile gesammelt hast, kriegst du eine Nachricht, wie es weitergeht.");
-        System.out.println("Fur das Spiel hast du 5 Leben, passe also auf, was du antwortest");
+        System.out.println("Fur das client.Spiel hast du 5 Leben, passe also auf, was du antwortest");
         System.out.println();
         System.out.println("-------------------------------------------------------------");
      
@@ -70,7 +72,7 @@ public class BegruessungsRaum extends Raum {
     }
 
     /** 
-     * Gib die Befehle für den aktuellen Raum aus 
+     * Gib die Befehle für den aktuellen client.Raum aus
      */
 
     @Override 

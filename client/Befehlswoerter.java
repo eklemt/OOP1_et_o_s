@@ -1,6 +1,6 @@
-/*
+package client;/*
  * Diese Klasse h�lt eine Aufz�hlung aller Befehlsw�rter, die dem
- * Spiel bekannt sind. Mit ihrer Hilfe werden eingetippte Befehle
+ * client.Spiel bekannt sind. Mit ihrer Hilfe werden eingetippte Befehle
  * erkannt.
  *
  * @author  Michael K�lling und David J. Barnes
@@ -24,9 +24,9 @@ class Befehlswoerter
 
     /**
      * Pr�fe, ob eine gegebene Zeichenkette ein g�ltiger
-     * Befehl ist.
+     * client.Befehl ist.
      * @return 'true', wenn die gegebene Zeichenkette ein g�ltiger
-     * Befehl ist, 'false' sonst.
+     * client.Befehl ist, 'false' sonst.
      */
     public boolean istBefehl(String eingabe)
     {

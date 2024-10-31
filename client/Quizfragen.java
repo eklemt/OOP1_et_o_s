@@ -1,3 +1,5 @@
+package client;
+
 import org.json.simple.JSONObject;
 
 public class Quizfragen {
@@ -24,9 +26,9 @@ public class Quizfragen {
     private String reward;
 
     /**
-     * Konstruktor für die Quizfragen-Klasse, der ein Objekt aus einem JSON-Objekt generiert.
+     * Konstruktor für die client.Quizfragen-Klasse, der ein Objekt aus einem JSON-Objekt generiert.
      *
-     * @param jsonObject das JSON-Objekt, aus dem die Eigenschaften für das Quizfragen-Objekt extrahiert werden
+     * @param jsonObject das JSON-Objekt, aus dem die Eigenschaften für das client.Quizfragen-Objekt extrahiert werden
      */
     public Quizfragen(JSONObject jsonObject)
     {
@@ -34,7 +36,7 @@ public class Quizfragen {
     }
 
     /**
-     * Extrahiert Eigenschaften aus einem JSON-Objekt und setzt sie als Attribute des Quizfragen-Objekts.
+     * Extrahiert Eigenschaften aus einem JSON-Objekt und setzt sie als Attribute des client.Quizfragen-Objekts.
      *
      * @param jsonObject das JSON-Objekt, aus dem die Eigenschaften extrahiert werden sollen
      */
@@ -62,7 +64,7 @@ public class Quizfragen {
     }
 
     /**
-     * Gibt den Raum zurück, in dem die Frage gestellt wird.
+     * Gibt den client.Raum zurück, in dem die Frage gestellt wird.
      *
      * @return der Name des Raums
      */

@@ -1,13 +1,15 @@
+package client;
+
 import java.util.Set;
 import java.util.HashMap;
 
 /**
- * Diese Klasse modelliert Raeume in der Welt von Elektrotechniker ohne Schaltplan.
+ * Diese Klasse modelliert Raeume in der Welt von Elektrotechniker ohne client.Schaltplan.
  * 
- * Ein "Raum" repraesentiert einen Ort in der virtuellen Landschaft des
- * Spiels. Ein Raum ist mit anderen Raeumen ueber Ausgaenge verbunden.
- * Fuer jeden existierenden Ausgang haelt ein Raum eine Referenz auf 
- * den benachbarten Raum.
+ * Ein "client.Raum" repraesentiert einen Ort in der virtuellen Landschaft des
+ * Spiels. Ein client.Raum ist mit anderen Raeumen ueber Ausgaenge verbunden.
+ * Fuer jeden existierenden Ausgang haelt ein client.Raum eine Referenz auf
+ * den benachbarten client.Raum.
  * 
  * @author  Emily Klemt, Carolin Altstaedt auf Basis von Michael Koelling und David J. Barnes
  * @version 27.05.2024
@@ -19,7 +21,7 @@ class Raum
     private HashMap<String, Raum> ausgaenge;        // die Ausgaenge dieses Raums
 
     /**
-     * Erzeuge einen Raum mit einer Beschreibung. Ein Raum
+     * Erzeuge einen client.Raum mit einer Beschreibung. Ein client.Raum
      * hat anfangs keine Ausgaenge.
      * @param beschreibung enthaelt eine Beschreibung in der Form
      *        "in einer Kueche" oder "auf einem Sportplatz".
@@ -31,9 +33,9 @@ class Raum
     }
 
     /**
-     * Definiere einen Ausgang fuer diesen Raum.
+     * Definiere einen Ausgang fuer diesen client.Raum.
      * @param richtung die Richtung, in der der Ausgang liegen soll
-     * @param nachbar der Raum, der ueber diesen Ausgang erreicht wird
+     * @param nachbar der client.Raum, der ueber diesen Ausgang erreicht wird
      */
     public void setzeAusgang(String richtung, Raum nachbar) 
     {
@@ -57,7 +59,7 @@ class Raum
      */
     public String gibLangeBeschreibung()
     {
-        return "Sie sind in folgendem Raum: " + beschreibung + ".\n" + gibAusgaengeAlsString();
+        return "Sie sind in folgendem client.Raum: " + beschreibung + ".\n" + gibAusgaengeAlsString();
     }
 
     /**
@@ -78,11 +80,11 @@ class Raum
    
 
     /**
-     * Liefere den Raum, den wir erreichen, wenn wir aus diesem Raum
+     * Liefere den client.Raum, den wir erreichen, wenn wir aus diesem client.Raum
      * in die angegebene Richtung gehen. Liefere 'null', wenn in
      * dieser Richtung kein Ausgang ist.
      * @param richtung die Richtung, in die gegangen werden soll.
-     * @return den Raum in der angegebenen Richtung.
+     * @return den client.Raum in der angegebenen Richtung.
      */
     public Raum gibAusgang(String richtung) 
     {
@@ -90,11 +92,11 @@ class Raum
     }
 
    /**
-    * Funktion, die die jeweiligen Befehle vom Raum ausfuehrt, je nachdem welcher Befehl eingegebeben wurde
-    * @param befehl, aktueller Befehl vom Parser
-    * @param spiel, um auf das Spiel zurückgreifen zu koennen
+    * Funktion, die die jeweiligen Befehle vom client.Raum ausfuehrt, je nachdem welcher Befehl eingegebeben wurde
+    * @param befehl, aktueller Befehl vom client.Parser
+    * @param spiel, um auf das client.Spiel zurückgreifen zu koennen
     * @param rucksack um auf die Inhalte des Rucksacks zurückgreifen zu koennen
-    * @return , ob der Spieler das Spiel beenden moechte
+    * @return , ob der Spieler das client.Spiel beenden moechte
     */
 
     public boolean fuehreBefehlAus(Befehl befehl, Spiel spiel, Rucksack rucksack) {
@@ -105,11 +107,11 @@ class Raum
             hilfstextAusgeben();
             System.out.println("");
         }
-        // Raum wechseln 
+        // client.Raum wechseln
         else if (befehlswort.equals("go")) {
             spiel.wechsleRaum(befehl);
         }
-        // Spiel verlassen
+        // client.Spiel verlassen
         else if (befehlswort.equals("quit")) {
             moechteBeenden = beenden(befehl);
         }
@@ -144,8 +146,8 @@ class Raum
 
     /**
      * "quit" wurde eingegeben. Ueberpruefe den Rest des Befehls,
-     * ob das Spiel wirklich beendet werden soll.
-     * @return 'true', wenn der Befehl das Spiel beendet, 'false' sonst.
+     * ob das client.Spiel wirklich beendet werden soll.
+     * @return 'true', wenn der Befehl das client.Spiel beendet, 'false' sonst.
      */
     private boolean beenden(Befehl befehl) 
     {
@@ -154,12 +156,12 @@ class Raum
             return false;
         }
         else {
-            return true;  // Das Spiel soll beendet werden.
+            return true;  // Das client.Spiel soll beendet werden.
         }
     }
     
     /**
-     * Gebe, die Befehle aus, die im aktuellen Raum moeglich sind
+     * Gebe, die Befehle aus, die im aktuellen client.Raum moeglich sind
      */
     protected void zeigeBefehle() {
         System.out.print("Aktuell moegliche Befehle: go, help, quit, ausgeben");

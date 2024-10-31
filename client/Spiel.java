@@ -1,14 +1,20 @@
+package client;
+
+import common.SpielInterface;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *  Dies ist die Hauptklasse der Anwendung "Elektrotechniker ohne Schaltplan", 
+ *  Dies ist die Hauptklasse der Anwendung "Elektrotechniker ohne Schaltplan",
  *  Diese basiert auf Zuul von Micheal Koelling und David J. Barnes
  *  Elektrotechniker ohne Schaltplan ist ein einfaches textbasiertes Game, in dem der Spieler eine
  *  Schaltung reparieren muss. Dafür muss der Spieler verschiedene Raeume finden, 
  *  in denen er nach Beantworten einer Frage, ein Schaltteil für diese Schaltung bekommt. 
  *  Sobald er alle Schaltteile eingesammelt hat, kann er die Schaltteile in der richtigen Reihenfolge in 
- *  einer Werkstatt verbinden und so gewinnen. 
+ *  einer Werkstatt verbinden und so gewinnen.
  *  Dabei stehen dem Spieler insgesamt 5 Leben zur Verfügung.
  * 
  *  Zum Spielen muss eine Instanz dieser Klasse erzeugt werden und
@@ -19,8 +25,7 @@ import java.util.Random;
  * @version 27.05.2024
  */
 
-class Spiel 
-{
+class Spiel {
     private Parser parser;
     private Raum aktuellerRaum;
     private Raum raumZUrWerkstatt; 
@@ -35,7 +40,7 @@ class Spiel
      * Erzeuge ein Spiel und initialisiere die interne Raumkarte, sowie den Schaltplan
      * 
      */
-    public Spiel() 
+    public Spiel() throws RemoteException
     {
         schaltplanAnlegen();
         raeumeAnlegen(this.aktuellerSchaltplan);
@@ -81,7 +86,7 @@ class Spiel
         anzahlElemente = aktuellerSchaltplan.anzahlElemente(); 
         rucksackDesSpielers = new Rucksack(anzahlElemente);
         /* Moeglichkeit, um nicht alle Quizfragen beantworten zu muessen, der Rucksack wird automatische richtig befuellt
-        Um die Werkstatt zu oeffnen, muss dann nur noch eine Frage beantwortet werden 
+        Um die Werkstatt zu oeffnen, muss dann nur noch eine Frage beantwortet werden
         for (String schaltteil : schaltplan.gibDieSchallteile()) {
             rucksackDesSpielers.packeSchaltteilEin(schaltteil);
         }
@@ -217,7 +222,7 @@ class Spiel
         System.out.println("Wenn du das Spiel schon kennst, fang einfach an");
         System.out.println("----------------------------------------------------"); 
         
-        // Spiel durchgehen, spiel gewinnen 
+        // Spiel durchgehen, spiel gewinnen
         boolean beendet = false;
         while (! beendet && (anzahlLebendesSpielers != 0)) {
             Befehl befehl = parser.liefereBefehl();
@@ -369,16 +374,4 @@ class Spiel
         }
     } 
 
-
-    /**
-     * Main, die das Spiel startet
-     * @param args
-     */
-
-    public static void main(String[] args){
-        System.out.println("Du hast ein neues Spiel gestartet.");
-        
-        Spiel spiel = new Spiel();
-        spiel.spielen();
-    }
 }
