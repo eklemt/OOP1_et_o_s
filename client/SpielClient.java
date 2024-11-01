@@ -25,15 +25,21 @@ public class SpielClient {
         { // kein Server mit logischem Namen �?Adder“ registriert
             System.err.println(e);
         }
-
-        // Start Texteingabe:
-        new Spiel().spielen();
     }
 
     public void starten() {
         try {
-            serverSpiel.hallo();  // Calls the server method to start the game
+            this.serverSpiel.hallo();  // Calls the server method to start the game
             System.out.println("Client: Game has started on the server.");
+            int currentPlayersInGame = this.serverSpiel.getPlayersOnline();
+
+            if(currentPlayersInGame == 1) {
+                System.out.println("At the moment " + currentPlayersInGame + " player is online - you are alone.");
+            } else {
+                System.out.println("At the moment " + currentPlayersInGame + " players are online");
+            }
+
+
 
             // Begin client-side game logic
             Spiel quizSpiel = new Spiel();
@@ -47,6 +53,7 @@ public class SpielClient {
     public static void main(String[] args) throws RemoteException {
         SpielClient client = new SpielClient();
         client.starten();  // Start the game sequence
+
     }
 
 

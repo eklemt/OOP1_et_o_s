@@ -9,14 +9,20 @@ import java.rmi.server.RemoteServer;
 import java.rmi.server.UnicastRemoteObject;
 
 public class SpielServer extends UnicastRemoteObject implements SpielInterface {
+    private int playerCount = 0;
 
     public SpielServer() throws RemoteException
     {
         super();
     }
 
-    public void hallo() {
-        System.out.println("Starting the game on the server...");
+    public void hallo() throws RemoteException {
+        System.out.println("Hello from Server ...");
+        playerCount++;
+    }
+
+    public int getPlayersOnline() throws RemoteException {
+        return playerCount;
     }
 
     public static void main(String[] args) {
