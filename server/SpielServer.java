@@ -1,5 +1,6 @@
 package server;
 
+import client.SpielClient;
 import common.SpielInterface;
 
 import java.rmi.RemoteException;
@@ -10,6 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class SpielServer extends UnicastRemoteObject implements SpielInterface {
     private int playerCount = 0;
+    private String password = "VS";
 
     public SpielServer() throws RemoteException
     {
@@ -23,6 +25,13 @@ public class SpielServer extends UnicastRemoteObject implements SpielInterface {
 
     public int getPlayersOnline() throws RemoteException {
         return playerCount;
+    }
+
+    public void authenticate(SpielClient client, String password) throws RemoteException {
+        assert(password.equals(this.password));
+        System.out.println(password);
+        System.err.println("Passwort korrekt!");
+        client.starten();
     }
 
     public static void main(String[] args) {
