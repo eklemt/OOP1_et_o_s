@@ -8,7 +8,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
 
-public class SpielClient {
+public class SpielClient implements java.io.Serializable {
     private SpielInterface serverSpiel;
     private String passwort;
 
