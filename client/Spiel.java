@@ -1,11 +1,13 @@
 package client;
 
+import common.ServerInterface;
 import common.SpielInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  *  Dies ist die Hauptklasse der Anwendung "Elektrotechniker ohne Schaltplan",
@@ -25,7 +27,10 @@ import java.util.Random;
  * @version 27.05.2024
  */
 
-class Spiel {
+class Spiel extends UnicastRemoteObject
+        implements SpielInterface {
+    private String passwort;
+    private ServerInterface server;
     private Parser parser;
     private Raum aktuellerRaum;
     private Raum raumZUrWerkstatt; 
@@ -40,12 +45,34 @@ class Spiel {
      * Erzeuge ein Spiel und initialisiere die interne Raumkarte, sowie den Schaltplan
      * 
      */
-    public Spiel() throws RemoteException
+    public Spiel(ServerInterface server) throws RemoteException
     {
+        this.server = server;
         schaltplanAnlegen();
         raeumeAnlegen(this.aktuellerSchaltplan);
         parser = new Parser();
         spielWurdeGewonnen = false; 
+    }
+
+    public void authenticate() throws RemoteException
+    {
+        System.out.print("Geben Sie Ihr Passwort ein:\n> ");
+        passwort = new Scanner(System.in).nextLine();
+        server.authenticate(this, passwort);
+    }
+
+    public void starten() throws RemoteException {
+        server.hallo();
+
+        int currentPlayersInGame = server.getPlayersOnline();
+
+        if(currentPlayersInGame == 1) {
+            System.out.println("At the moment " + currentPlayersInGame + " player is online - you are alone.");
+        } else {
+            System.out.println("At the moment " + currentPlayersInGame + " players are online");
+        }
+
+        this.spielen();
     }
     
     /**
