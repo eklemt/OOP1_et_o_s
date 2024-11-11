@@ -27,13 +27,6 @@ public class SpielServer extends UnicastRemoteObject implements ServerInterface 
         return playerCount;
     }
 
-    /*
-    public void authenticate(SpielInterface client, String password) throws RemoteException {
-        assert(password.equals(this.password));
-        System.out.println(password);
-        System.err.println("Passwort korrekt!");
-        client.starten();
-    }*/
     public void authenticate(SpielInterface client, String passwort)
             throws RemoteException
     {
