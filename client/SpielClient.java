@@ -18,7 +18,7 @@ public class SpielClient {
             System.err.println("Connected to: " + serverSpiel);
 
             // Begin client-side game logic
-            Spiel quizSpiel = new Spiel(serverSpiel);
+            Spiel quizSpiel = new Spiel(serverSpiel, this);
             quizSpiel.authenticate();
         }
         catch (RemoteException e)
@@ -28,6 +28,23 @@ public class SpielClient {
         catch (NotBoundException e)
         { // kein Server mit logischem Namen �?Adder“ registriert
             System.err.println(e);
+        }
+    }
+
+    public void logout() {
+        try {
+            if (serverSpiel != null) {
+                // Optional: define server-side cleanup if needed
+                serverSpiel.logout();  // Optional if defined on the server side
+                serverSpiel = null;
+                System.out.println("Client logged out successfully.");
+            } else {
+                System.out.println("Already logged out or not connected.");
+            }
+        } catch (RemoteException e) {
+            System.err.println("Error during logout: " + e);
+        } finally {
+            System.exit(0);
         }
     }
 

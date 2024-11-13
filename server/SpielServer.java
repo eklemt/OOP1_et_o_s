@@ -35,6 +35,13 @@ public class SpielServer extends UnicastRemoteObject implements ServerInterface 
         client.starten();
     }
 
+    public void logout() {
+        if(playerCount > 0) {
+            playerCount--;
+        }
+        System.out.println("A player has logged off. Current player online: " + playerCount);
+    }
+
     public static void main(String[] args) {
         try {
             // Start the registry

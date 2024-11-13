@@ -3,6 +3,7 @@ package client;
 import common.ServerInterface;
 import common.SpielInterface;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ class Spiel extends UnicastRemoteObject
         implements SpielInterface {
     private String passwort;
     private ServerInterface server;
+    private SpielClient client;
     private Parser parser;
     private Raum aktuellerRaum;
     private Raum raumZUrWerkstatt; 
@@ -45,9 +47,10 @@ class Spiel extends UnicastRemoteObject
      * Erzeuge ein Spiel und initialisiere die interne Raumkarte, sowie den Schaltplan
      * 
      */
-    public Spiel(ServerInterface server) throws RemoteException
+    public Spiel(ServerInterface server, SpielClient client) throws RemoteException
     {
         this.server = server;
+        this.client = client;
         schaltplanAnlegen();
         raeumeAnlegen(this.aktuellerSchaltplan);
         parser = new Parser();
@@ -59,6 +62,11 @@ class Spiel extends UnicastRemoteObject
         System.out.print("Geben Sie Ihr Passwort ein:\n> ");
         passwort = new Scanner(System.in).nextLine();
         server.authenticate(this, passwort);
+    }
+
+    public void exitGame() throws RemoteException {
+        System.out.println("Exiting the game and logging out...");
+        this.client.logout();
     }
 
     public void starten() throws RemoteException {
@@ -240,8 +248,7 @@ class Spiel extends UnicastRemoteObject
      * in einer Schleife.
      * Zudem wird hier beim Gewinnen ein Text ausgegeben
      */
-    public void spielen() 
-    {            
+    public void spielen() throws RemoteException {
         System.out.println("Willkommen zu Elektrotechniker ohne (Schalt-)plan"); 
         System.out.println("Fuer mehr Informationen zur Bedinung gib help ein, fuer die Einfuehrung in das Spiel welcome");
         System.out.println("Welcome funktioniert dabei nur in diesem aktuellen Raum ");
@@ -275,6 +282,7 @@ class Spiel extends UnicastRemoteObject
                 System.out.println("Wie schade, dass du das Spiel nicht mehr spielen möchtest ...");
                 System.out.println(".....");
                 System.out.println("Auf Wiedersehen");
+                this.exitGame();
             }
         }
     }

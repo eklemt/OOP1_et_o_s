@@ -9,4 +9,6 @@ public interface ServerInterface extends Remote {
     int getPlayersOnline() throws RemoteException;
 
     void authenticate(SpielInterface client, String password) throws RemoteException;
+
+    void logout() throws RemoteException;
 }
