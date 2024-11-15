@@ -51,7 +51,7 @@ public class SpielServer extends UnicastRemoteObject implements ServerInterface 
             // Create and bind the SpielServer instance
             SpielServer server = new SpielServer();
             Registry registry = LocateRegistry.getRegistry();
-            registry.rebind("Quizspiel", server);
+            registry.rebind("rmi://localhost/Quizspiel", server);
             System.out.println("SpielServer is running and bound to registry...");
 
         } catch (RemoteException e) {

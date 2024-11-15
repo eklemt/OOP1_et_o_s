@@ -16,7 +16,7 @@ public class SpielClient {
             String serverIP = "192.168.249.175";
             int port = 1099;
             Registry registry = LocateRegistry.getRegistry(serverIP, port);
-            serverSpiel = (ServerInterface) registry.lookup("Quizspiel");
+            serverSpiel = (ServerInterface) registry.lookup("rmi://localhost/Quizspiel");
             System.err.println("Connected to: " + serverSpiel);
 
             // Begin client-side game logic
