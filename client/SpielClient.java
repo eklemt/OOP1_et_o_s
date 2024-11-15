@@ -13,7 +13,9 @@ public class SpielClient {
     public SpielClient() throws RemoteException {
         try
         {
-            Registry registry = LocateRegistry.getRegistry();
+            String serverIP = "192.168.249.175";
+            int port = 1099;
+            Registry registry = LocateRegistry.getRegistry(serverIP, port);
             serverSpiel = (ServerInterface) registry.lookup("Quizspiel");
             System.err.println("Connected to: " + serverSpiel);
 

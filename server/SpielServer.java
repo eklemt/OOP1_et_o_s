@@ -45,7 +45,7 @@ public class SpielServer extends UnicastRemoteObject implements ServerInterface 
     public static void main(String[] args) {
         try {
             // Start the registry
-            LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+            LocateRegistry.createRegistry(1099);
             System.out.println("Registry started...");
 
             // Create and bind the SpielServer instance
